@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class IngredientTableViewController: UITableViewController {
     
@@ -55,16 +56,42 @@ class IngredientTableViewController: UITableViewController {
         return true
     }
     
+    func deleteRequest(ingredientName: String) {
+        let url = "http://3.228.111.41/list?username=bobrosspaints&ingredient=" + ingredientName
+        
+        AF.request(url, method: .delete, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+//                guard let json = response.value as? [String: Any] else {
+//                  print("didn't get object as JSON from API")
+//                  if let error = response.error {
+//                    print("Error: \(error)")
+//                  }
+//                  return
+//                }
+//                print(json)
+//                guard let result = json["result"] as? [String: Any], let userIngredients = result["user_ingredients"] as? [String] else {
+//                  print("Could not get user ingredients from JSON")
+//                  return
+//                }
+                print("success")
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-//            let ingredient = ingredients.
+            let ingredient = ingredients[indexPath.row]
             listItems.remove(at: indexPath.row)
             ingredients.remove(at: indexPath.row)
-//            deleteRequest()
+            deleteRequest(ingredientName: ingredient)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    

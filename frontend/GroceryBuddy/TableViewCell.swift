@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class TableViewCell: UITableViewCell, UITextFieldDelegate {
     
+    var oldLabel:String
     let label:UITextField
      
     var listItems:ListItem? {
@@ -23,14 +25,13 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
         label = UITextField(frame: CGRect.null)
         label.textColor = UIColor.black
         label.font = UIFont.systemFont(ofSize: 16)
-     
+        oldLabel = label.text!
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         // 2
         label.delegate = self
         label.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         // 3
         addSubview(label)
-     
     }
     
     let leftMarginForLabel: CGFloat = 75.0
@@ -38,6 +39,7 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = CGRect(x: leftMarginForLabel, y: 0, width: bounds.size.width - leftMarginForLabel, height: bounds.size.height)
+        oldLabel = label.text!
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -45,10 +47,30 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
         return false
     }
     
+    func putRequest(oldIngredient: String, newIngredient: String) {
+        let url = "http://3.228.111.41/list"
+
+        let parameters = [
+            "username": "bobrosspaints",
+            "old_ingredient": oldIngredient,
+            "new_ingredient": newIngredient
+        ]
+
+        AF.request(url, method: .put, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                print("success")
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         if listItems != nil {
             listItems?.text = textField.text!
         }
+        putRequest(oldIngredient: self.oldLabel, newIngredient: listItems!.text)
         return true
     }
 

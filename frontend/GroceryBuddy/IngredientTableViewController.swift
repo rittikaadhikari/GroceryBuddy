@@ -62,18 +62,6 @@ class IngredientTableViewController: UITableViewController {
         AF.request(url, method: .delete, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-//                guard let json = response.value as? [String: Any] else {
-//                  print("didn't get object as JSON from API")
-//                  if let error = response.error {
-//                    print("Error: \(error)")
-//                  }
-//                  return
-//                }
-//                print(json)
-//                guard let result = json["result"] as? [String: Any], let userIngredients = result["user_ingredients"] as? [String] else {
-//                  print("Could not get user ingredients from JSON")
-//                  return
-//                }
                 print("success")
             case .failure(let error):
                 print(error)

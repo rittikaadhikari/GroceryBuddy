@@ -60,22 +60,13 @@ class IngredientTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+//            let ingredient = ingredients.
             listItems.remove(at: indexPath.row)
             ingredients.remove(at: indexPath.row)
+//            deleteRequest()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let currentCell = tableView.cellForRow(at: indexPath)!
-//        let currentItem = currentCell.textLabel?.text
-//
-//        let alertController = UIAlertController(title: "You Selected " + currentItem!, message: "", preferredStyle: .alert)
-//        let defaultAction = UIAlertAction(title: "Close", style: .default, handler: nil)
-//        alertController.addAction(defaultAction)
-//
-//        present(alertController, animated: true, completion: nil)
-//    }
 }

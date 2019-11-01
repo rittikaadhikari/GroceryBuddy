@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class FridgeViewController: UIViewController {
     
@@ -46,10 +47,38 @@ class FridgeViewController: UIViewController {
         //    self.view.addSubview(addItemButton)
     }
     
+    func getRequest(completionHandler: @escaping ([String]?) -> ()) {
+        let url = "http://3.228.111.41/list/bobrosspaints"
+        
+        AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let json = response.value as? [String: Any] else {
+                  print("didn't get object as JSON from API")
+                  if let error = response.error {
+                    print("Error: \(error)")
+                  }
+                  return
+                }
+                print(json)
+                guard let result = json["result"] as? [String: Any], let userIngredients = result["user_ingredients"] as? [String] else {
+                  print("Could not get user ingredients from JSON")
+                  return
+                }
+                print(userIngredients)
+                completionHandler(userIngredients as? [String])
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     @objc func listButtonAction(sender: UIButton!) {
         let ingredientsTable = IngredientTableViewController()
-        ingredientsTable.ingredients = ["Bacon", "Eggs"]
-        navigationController?.pushViewController(ingredientsTable, animated: true)
+        getRequest { (result) in
+            ingredientsTable.ingredients = result!
+            self.navigationController?.pushViewController(ingredientsTable, animated: true)
+        }
     }
     
     @objc func addButtonAction(sender: UIButton!) {

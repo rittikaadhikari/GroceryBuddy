@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import Alamofire
 
 class AddIngredientViewController: FormViewController {
     override func viewDidLoad() {
@@ -33,11 +34,30 @@ class AddIngredientViewController: FormViewController {
         }
     }
     
+    func postRequest(ingredientName: String) {
+        let url = "http://3.228.111.41/list"
+
+        let parameters = [
+            "username": "bobrosspaints",
+            "ingredient": ingredientName
+        ]
+
+        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                print("success")
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     @objc func onDone() {
         let valuesDictionary = form.values()
         let ingredientName = valuesDictionary["IngredientTag"]
         if let ingredientName = ingredientName as! String? {
             print(ingredientName)
+            postRequest(ingredientName: ingredientName)
         }
     }
 }

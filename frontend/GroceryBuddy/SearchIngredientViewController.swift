@@ -14,21 +14,22 @@ class SearchIngredientViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Search Ingredients"
+        self.navigationItem.title = "Search By Category"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(onSearch))
         
-        form +++ Section("Section1")
-            <<< TextRow("IngredientTag"){ row in
-                row.title = "Ingredient Name"
-                row.placeholder = "Enter text here"
+        form +++ Section("Ingredient Category")
+            <<< ActionSheetRow<String>("IngredientTag"){ row in
+                row.title = "Select a Category"
+                row.selectorTitle = "Select a Category"
+                row.options = ["Meat", "Vegetables", "Fruit", "Dairy", "Cheese", "Seafood"]
         }
     }
     
     @objc func onSearch() {
         let valuesDictionary = form.values()
-        let ingredientName = valuesDictionary["IngredientTag"]
-        if let ingredientName = ingredientName as! String? {
-            print(ingredientName)
+        let ingredientCat = valuesDictionary["IngredientTag"]
+        if let ingredientCat = ingredientCat as! String? {
+            print(ingredientCat)
         }
     }
 }

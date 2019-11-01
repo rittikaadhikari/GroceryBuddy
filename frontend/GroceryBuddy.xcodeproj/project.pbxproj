@@ -17,6 +17,9 @@
 		FAEA1AA9236BD1E900A41926 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = FAEA1AA8236BD1E900A41926 /* Podfile */; };
 		FAFE2623236BD250002A6D2F /* AddIngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2622236BD250002A6D2F /* AddIngredientViewController.swift */; };
 		FAFE2625236BE36D002A6D2F /* SearchIngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2624236BE36D002A6D2F /* SearchIngredientViewController.swift */; };
+		FAFE2627236BEE55002A6D2F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2626236BEE55002A6D2F /* TableViewController.swift */; };
+		FAFE2629236BF1A8002A6D2F /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2628236BF1A8002A6D2F /* ListItem.swift */; };
+		FAFE262B236BF1DE002A6D2F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE262A236BF1DD002A6D2F /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		FAEA1AA8236BD1E900A41926 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FAFE2622236BD250002A6D2F /* AddIngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientViewController.swift; sourceTree = "<group>"; };
 		FAFE2624236BE36D002A6D2F /* SearchIngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIngredientViewController.swift; sourceTree = "<group>"; };
+		FAFE2626236BEE55002A6D2F /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		FAFE2628236BF1A8002A6D2F /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		FAFE262A236BF1DD002A6D2F /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,9 @@
 				FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */,
 				FAFE2622236BD250002A6D2F /* AddIngredientViewController.swift */,
 				FAFE2624236BE36D002A6D2F /* SearchIngredientViewController.swift */,
+				FAFE2626236BEE55002A6D2F /* TableViewController.swift */,
+				FAFE2628236BF1A8002A6D2F /* ListItem.swift */,
+				FAFE262A236BF1DD002A6D2F /* TableViewCell.swift */,
 			);
 			path = GroceryBuddy;
 			sourceTree = "<group>";
@@ -216,8 +225,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA267DAC236B9EC4003B4AB9 /* AppDelegate.swift in Sources */,
+				FAFE2627236BEE55002A6D2F /* TableViewController.swift in Sources */,
 				FAFE2623236BD250002A6D2F /* AddIngredientViewController.swift in Sources */,
+				FAFE262B236BF1DE002A6D2F /* TableViewCell.swift in Sources */,
 				FA267DC0236BA279003B4AB9 /* SceneDelegate.swift in Sources */,
+				FAFE2629236BF1A8002A6D2F /* ListItem.swift in Sources */,
 				FAFE2625236BE36D002A6D2F /* SearchIngredientViewController.swift in Sources */,
 				FAEA1AA5236BC03600A41926 /* IngredientTableViewController.swift in Sources */,
 				FAEA1AA1236BBD1400A41926 /* FridgeViewController.swift in Sources */,

@@ -16,16 +16,17 @@ class AddIngredientViewController: FormViewController {
         self.navigationItem.title = "Add to Grocery List"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onDone))
         
-        form +++ Section("Section1")
+        form +++ Section("Ingredient")
             <<< TextRow("IngredientTag"){ row in
                 row.title = "Ingredient Name"
                 row.placeholder = "Enter text here"
             }
-            <<< PhoneRow(){
-                $0.title = "Ingredient Category"
-                $0.placeholder = "Set category here"
+            <<< ActionSheetRow<String>("IngredientCat"){ row in
+                    row.title = "Select a Category"
+                    row.selectorTitle = "Select a Category"
+                    row.options = ["Meat", "Vegetables", "Fruit", "Dairy", "Cheese", "Seafood"]
             }
-            +++ Section("Section2")
+            +++ Section("Metadata")
             <<< DateRow(){
                 $0.title = "Date"
                 $0.value = Date(timeIntervalSinceNow: 0)

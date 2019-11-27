@@ -19,38 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     
     let navigationController = UINavigationController()
-    let fridgeController = FridgeViewController()
-    navigationController.pushViewController(fridgeController, animated: false)
-    
-    let navigationController2 = UINavigationController()
-    let addController = AddIngredientViewController()
-    navigationController2.pushViewController(addController, animated: false)
-    
-    let navigationController3 = UINavigationController()
-    let searchController = SearchIngredientViewController()
-    navigationController3.pushViewController(searchController, animated: false)
-    
-    let tabBarController = UITabBarController()
-    tabBarController.viewControllers = [navigationController, navigationController2, navigationController3]
-    
-    let userItem = UITabBarItem()
-    userItem.image = UIImage(named: "Profile")
-    userItem.title = "User"
-    navigationController.tabBarItem = userItem
-    
-    let plusItem = UITabBarItem()
-    plusItem.image = UIImage(named: "Plus")
-    plusItem.title = "Add Ingredients"
-    navigationController2.tabBarItem = plusItem
-    
-    let searchItem = UITabBarItem()
-    searchItem.image = UIImage(named: "Search")
-    searchItem.title = "Search Ingredients"
-    navigationController3.tabBarItem = searchItem
     
     window = UIWindow(frame: windowScene.coordinateSpace.bounds)
     window?.windowScene = windowScene
-    window?.rootViewController = tabBarController
+    
+    let launchViewController = LaunchViewController()
+    navigationController.pushViewController(launchViewController, animated: false)
+    window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
   }
 

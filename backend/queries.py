@@ -5,6 +5,7 @@ from pymongo import MongoClient
 client = MongoClient('3.234.30.163', 27017)
 db = client.grocery_list
 grocery_list = db.grocery_list
+fridge = db.fridge
 conn = psycopg2.connect(dbname='postgres', user='postgres', password='alawini411', host='cs411-project.cm2xo0osnz3p.us-east-1.rds.amazonaws.com', port='5432')
 conn.autocommit = True
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -51,9 +52,12 @@ def insert_into_grocery_list(username, ingredient):
     params = (username, )
     cur.execute(query, params)
     ans = cur.fetchone()
+    if not ans:
+        return None
     ans = dict(ans)
     user_id = ans.get("user_id")
-    res = grocery_list.update({"user_id":user_id}, {"$push": {"user_ingredients": ingredient}})
+    res = grocery_list.update({"user_id":user_id}, {"$push": {"user_ingredients": ingredient}}, upsert=True)
+    res.pop('upserted')
     return res
 
 def delete_from_grocery_list(username, ingredient):
@@ -61,6 +65,8 @@ def delete_from_grocery_list(username, ingredient):
     params = (username, )
     cur.execute(query, params)
     ans = cur.fetchone()
+    if not ans:
+        return None
     ans = dict(ans)
     user_id = ans.get("user_id")
     res = grocery_list.update({"user_id":user_id}, {"$pull": {"user_ingredients": ingredient}})
@@ -71,6 +77,8 @@ def get_grocery_list(username):
     params = (username, )
     cur.execute(query, params)
     ans = cur.fetchone()
+    if not ans:
+        return None
     ans = dict(ans)
     user_id = ans.get("user_id")
     res = grocery_list.find_one({"user_id":user_id}, {"user_ingredients": 1, "_id": 0})
@@ -82,3 +90,115 @@ def edit_ingredient_in_grocery_list(username, old_ingredient, new_ingredient):
     return res2
     
 
+def create_ingredient(ingredient_name, ingredient_category):
+    query = """INSERT INTO ingredients(ingredient_name, ingredient_category) values (%s, %s) returning *"""
+    params = (ingredient_name, ingredient_category)
+    return get_dict_resultset(query, params)
+
+
+def get_ingredient(ingredient_name):
+    query = """SELECT * FROM ingredients where ingredient_name = %s"""
+    params = (ingredient_name,)
+    return get_dict_resultset(query, params)
+
+def get_ingredient_by_category(ingredient_category):
+    query = """SELECT * FROM ingredients where ingredient_category = %s"""
+    params = (ingredient_category,)
+    return get_dict_resultset(query, params)
+
+def update_ingredient(oingredient, ningredient, ncategory):
+    query = """UPDATE ingredients set ingredient_name = %s, ingredient_category = %s where ingredient_name = %s returning *"""
+    params = (ningredient, ncategory, oingredient)
+    return get_dict_resultset(query, params)
+
+def delete_ingredient(ingredient):
+    query = """DELETE FROM ingredients where ingredient_name = %s returning *"""
+    params = (ingredient, )
+    return get_dict_resultset(query, params)
+
+def insert_into_fridge(username, ingredient):
+    query = """select user_id from users where username = %s"""
+    params = (username, )
+    cur.execute(query, params)
+    ans = cur.fetchone()
+    if not ans:
+        return None
+    ans = dict(ans)
+    user_id = ans.get("user_id")
+
+    query = """select ingredient_id from ingredients where ingredient_name ilike %s"""
+    params = (ingredient, )
+    cur.execute(query, params)
+    ans = cur.fetchone()
+    if not ans:
+        query = """insert into ingredients(ingredient_name, ingredient_category) values (%s, 'unknown') returning ingredient_id"""
+        params = (ingredient, )
+        cur.execute(query, params)
+        ans = cur.fetchone()
+        ans = dict(ans)
+        ingredient_id = ans.get("ingredient_id")
+    else:
+        ans = dict(ans)
+        ingredient_id = ans.get("ingredient_id")
+    res = fridge.update({"user_id":user_id}, {"$push": {"fridge": ingredient_id}}, upsert=True)
+    res.pop('upserted')
+    print(res)
+    return res
+
+def delete_from_fridge(username, ingredient):
+    query = """select user_id from users where username = %s"""
+    params = (username, )
+    cur.execute(query, params)
+    ans = cur.fetchone()
+    if not ans:
+        return None
+    ans = dict(ans)
+    user_id = ans.get("user_id")
+    query = """select ingredient_id from ingredients where ingredient_name ilike %s"""
+    params = (ingredient, )
+    cur.execute(query, params)
+    ans = cur.fetchone()
+    ans = dict(ans)
+    ingredient_id = ans.get("ingredient_id")
+    res = fridge.update({"user_id":user_id}, {"$pull": {"fridge": ingredient_id}})
+    return res
+
+def get_fridge(username):
+    print(username)
+    query = """select user_id from users where username = %s"""
+    params = (username, )
+    cur.execute(query, params)
+    ans = cur.fetchone()
+    if not ans:
+        return None
+    if not ans:
+        return None
+    ans = dict(ans)
+    user_id = ans.get("user_id")
+    res = fridge.find_one({"user_id":user_id}, {"fridge": 1, "_id": 0})
+    if not res:
+        return {"result" : []} 
+
+    
+    print(res)
+    query = """select ingredient_name from ingredients where ingredient_id in %s"""
+    params = tuple(res['fridge']) 
+    res = get_dict_resultset(query, (params,))
+    return res 
+
+def edit_ingredient_in_fridge(username, old_ingredient, new_ingredient):
+    res1 = delete_from_fridge(username, old_ingredient)
+    res2 = insert_into_fridge(username, new_ingredient)
+    return res2
+    
+def get_recipes():
+    res = recipes.find()
+    return res
+
+def get_recipe_by_id(recipe_id):
+    res = recipes.find_one({"recipe_id":recipe_id})
+    return res
+
+def get_recipes_by_ingredients(ingredient_ids):
+    res = recipes.find({"ingredients": {"$all": ingredient_ids}})
+    return res

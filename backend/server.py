@@ -37,6 +37,8 @@ def create_response(data, status, message):
 def home():
     return "Grocery App"
 
+######################################################################################################
+
 @app.route('/users', methods=['DELETE'])
 def delete_user():
     data = request.args
@@ -83,7 +85,78 @@ def get_user(username):
         return create_response(res, 200, "OK")
     return create_response({}, 404, "Not Found")
 
+######################################################################################################
 
+@app.route('/ingredients', methods=['GET'])
+def get_ingredient(username):
+    data = request.args
+    ingredient_name = data.get("ingredient_name")
+    ingredient_category = data.get("ingredient_category")
+    if ingredient_name:
+        res = psql.get_ingredient(ingredient_name)
+    elif ingredient_category:
+        res = psql.get_ingredient_by_category(ingredient_category)
+    else:
+        return create_response({}, 404, "Not Found")
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+@app.route('/ingredients', methods=['POST'])
+def add_ingredient():
+    data = request.form
+    ingredient_name = data.get("ingredient_name")
+    ingredient_category = data.get("ingredient_category")
+
+    res = psql.create_ingredient(ingredient_name, ingredient_category)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+######################################################################################################
+
+@app.route('/fridge', methods=['POST'])
+def add_ingredient_to_fridge():
+    data = request.form
+    username = data.get("username")
+    ingredient = data.get("ingredient")
+
+    res = psql.insert_into_fridge(username, ingredient)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+@app.route('/fridge', methods=['DELETE'])
+def remove_ingredient_from_fridge():
+    data = request.args
+    username = data.get("username")
+    ingredient = data.get("ingredient")
+
+    res = psql.delete_from_fridge(username, ingredient)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+@app.route('/fridge/<username>', methods=['GET'])
+def get_ingredients_from_fridge(username):
+    res = psql.get_fridge(username)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+@app.route('/fridge', methods=['PUT'])
+def change_ingredient_on_fridge():
+    data = request.form
+    username = data.get("username")
+    old_ingredient = data.get("old_ingredient")
+    new_ingredient = data.get("new_ingredient")
+
+    res = psql.edit_ingredient_in_fridge(username, old_ingredient, new_ingredient)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+######################################################################################################
 
 @app.route('/list', methods=['POST'])
 def add_ingredient_to_list():
@@ -125,6 +198,8 @@ def change_ingredient_on_list():
     if res:
         return create_response(res, 200, "OK")
     return create_response({}, 404, "Not Found")
+
+######################################################################################################
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0', port=80)

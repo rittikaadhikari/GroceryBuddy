@@ -13,6 +13,7 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var oldLabel:String
     let label:UITextField
+    var username:String = ""
      
     var listItems:ListItem? {
         didSet {
@@ -51,7 +52,7 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
         let url = "http://3.228.111.41/list"
 
         let parameters = [
-            "username": "bobrosspaints",
+            "username": username,
             "old_ingredient": oldIngredient,
             "new_ingredient": newIngredient
         ]

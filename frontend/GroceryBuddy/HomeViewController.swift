@@ -10,17 +10,21 @@ import UIKit
 
 class HomeViewController: UITabBarController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    var username:String = ""
+    var viewsSet:Bool = false
+    
+    func createViews() {
         let fridgeController = FridgeViewController()
+        fridgeController.username = username
 
         let navigationController2 = UINavigationController()
         let addController = AddIngredientViewController()
+        addController.username = username
         navigationController2.pushViewController(addController, animated: false)
 
         let navigationController3 = UINavigationController()
         let searchController = SearchIngredientViewController()
+        searchController.username = username
         navigationController3.pushViewController(searchController, animated: false)
 
         self.viewControllers = [fridgeController, navigationController2, navigationController3]
@@ -39,5 +43,21 @@ class HomeViewController: UITabBarController {
         searchItem.image = UIImage(named: "Search")
         searchItem.title = "Search Ingredients"
         navigationController3.tabBarItem = searchItem
+        
+        viewsSet = true
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        if !username.isEmpty && !viewsSet {
+            createViews()
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if !username.isEmpty && !viewsSet {
+            createViews()
+        }
     }
 }

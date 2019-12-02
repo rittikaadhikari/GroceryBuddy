@@ -11,6 +11,8 @@ import Alamofire
 
 class FridgeViewController: UIViewController {
     
+    var username:String = ""
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 100, width: view.frame.size.width, height: 50))
         label.text = "Grocery Buddy"
@@ -48,7 +50,7 @@ class FridgeViewController: UIViewController {
     }
     
     func getRequest(completionHandler: @escaping ([String]?) -> ()) {
-        let url = "http://3.228.111.41/list/bobrosspaints"
+        let url = "http://3.228.111.41/list/" + username
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
@@ -75,6 +77,7 @@ class FridgeViewController: UIViewController {
     
     @objc func listButtonAction(sender: UIButton!) {
         let ingredientsTable = IngredientTableViewController()
+        ingredientsTable.username = username
         getRequest { (result) in
             ingredientsTable.ingredients = result!
             self.navigationController?.pushViewController(ingredientsTable, animated: true)

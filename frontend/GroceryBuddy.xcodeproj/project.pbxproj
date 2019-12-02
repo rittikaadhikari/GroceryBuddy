@@ -12,11 +12,13 @@
 		FA267DB5236B9EC9003B4AB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA267DB4236B9EC9003B4AB9 /* Assets.xcassets */; };
 		FA267DB8236B9EC9003B4AB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA267DB6236B9EC9003B4AB9 /* LaunchScreen.storyboard */; };
 		FA267DC0236BA279003B4AB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */; };
+		FA49A83C23946B55001D334E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49A83B23946B55001D334E /* LoginViewController.swift */; };
 		FAEA1AA1236BBD1400A41926 /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA0236BBD1400A41926 /* FridgeViewController.swift */; };
 		FAEA1AA5236BC03600A41926 /* IngredientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */; };
 		FAEA1AA9236BD1E900A41926 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = FAEA1AA8236BD1E900A41926 /* Podfile */; };
 		FAF14883238E109D0041703A /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF14882238E109D0041703A /* LaunchViewController.swift */; };
 		FAF14885238E1AC70041703A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF14884238E1AC70041703A /* HomeViewController.swift */; };
+		FAF14887238E21000041703A /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF14886238E21000041703A /* RegisterViewController.swift */; };
 		FAFE2623236BD250002A6D2F /* AddIngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2622236BD250002A6D2F /* AddIngredientViewController.swift */; };
 		FAFE2625236BE36D002A6D2F /* SearchIngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2624236BE36D002A6D2F /* SearchIngredientViewController.swift */; };
 		FAFE2627236BEE55002A6D2F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE2626236BEE55002A6D2F /* TableViewController.swift */; };
@@ -34,11 +36,13 @@
 		FA267DB7236B9EC9003B4AB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA267DB9236B9EC9003B4AB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		FA49A83B23946B55001D334E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FAEA1AA0236BBD1400A41926 /* FridgeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FridgeViewController.swift; sourceTree = "<group>"; };
 		FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewController.swift; sourceTree = "<group>"; };
 		FAEA1AA8236BD1E900A41926 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FAF14882238E109D0041703A /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		FAF14884238E1AC70041703A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FAF14886238E21000041703A /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		FAFE2622236BD250002A6D2F /* AddIngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientViewController.swift; sourceTree = "<group>"; };
 		FAFE2624236BE36D002A6D2F /* SearchIngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIngredientViewController.swift; sourceTree = "<group>"; };
 		FAFE2626236BEE55002A6D2F /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 		FA267DAA236B9EC4003B4AB9 /* GroceryBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				FA49A83A23946B1C001D334E /* StartFlow */,
 				FAF14881238E0D640041703A /* IngredientControllers */,
 				FAEA1AA8236BD1E900A41926 /* Podfile */,
 				FAEA1AA0236BBD1400A41926 /* FridgeViewController.swift */,
@@ -99,10 +104,19 @@
 				FAFE2626236BEE55002A6D2F /* TableViewController.swift */,
 				FAFE2628236BF1A8002A6D2F /* ListItem.swift */,
 				FAFE262A236BF1DD002A6D2F /* TableViewCell.swift */,
-				FAF14882238E109D0041703A /* LaunchViewController.swift */,
 				FAF14884238E1AC70041703A /* HomeViewController.swift */,
 			);
 			path = GroceryBuddy;
+			sourceTree = "<group>";
+		};
+		FA49A83A23946B1C001D334E /* StartFlow */ = {
+			isa = PBXGroup;
+			children = (
+				FAF14882238E109D0041703A /* LaunchViewController.swift */,
+				FAF14886238E21000041703A /* RegisterViewController.swift */,
+				FA49A83B23946B55001D334E /* LoginViewController.swift */,
+			);
+			name = StartFlow;
 			sourceTree = "<group>";
 		};
 		FA80AB7BBAD0D7FEE32ED9F3 /* Frameworks */ = {
@@ -241,6 +255,7 @@
 				FA267DAC236B9EC4003B4AB9 /* AppDelegate.swift in Sources */,
 				FAF14883238E109D0041703A /* LaunchViewController.swift in Sources */,
 				FAFE2627236BEE55002A6D2F /* TableViewController.swift in Sources */,
+				FAF14887238E21000041703A /* RegisterViewController.swift in Sources */,
 				FAFE2623236BD250002A6D2F /* AddIngredientViewController.swift in Sources */,
 				FAFE262B236BF1DE002A6D2F /* TableViewCell.swift in Sources */,
 				FA267DC0236BA279003B4AB9 /* SceneDelegate.swift in Sources */,
@@ -248,6 +263,7 @@
 				FAF14885238E1AC70041703A /* HomeViewController.swift in Sources */,
 				FAFE2625236BE36D002A6D2F /* SearchIngredientViewController.swift in Sources */,
 				FAEA1AA5236BC03600A41926 /* IngredientTableViewController.swift in Sources */,
+				FA49A83C23946B55001D334E /* LoginViewController.swift in Sources */,
 				FAEA1AA1236BBD1400A41926 /* FridgeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

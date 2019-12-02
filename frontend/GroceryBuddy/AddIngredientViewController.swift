@@ -11,6 +11,9 @@ import Eureka
 import Alamofire
 
 class AddIngredientViewController: FormViewController {
+    
+    var username:String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +41,7 @@ class AddIngredientViewController: FormViewController {
         let url = "http://3.228.111.41/list"
 
         let parameters = [
-            "username": "bobrosspaints",
+            "username": username,
             "ingredient": ingredientName
         ]
 

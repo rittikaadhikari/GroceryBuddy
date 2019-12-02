@@ -11,6 +11,8 @@ import Eureka
 
 class SearchIngredientViewController: FormViewController {
     
+    var username:String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -48,12 +48,6 @@ class LaunchViewController: UIViewController {
         }()
     
     func setupButtons() {
-        let redView = UIView()
-        redView.backgroundColor = .red
-
-        let blueView = UIView()
-        blueView.backgroundColor = .blue
-        
         let stackView = UIStackView(arrangedSubviews: [registerButton, loginButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
@@ -76,12 +70,10 @@ class LaunchViewController: UIViewController {
     }
     
     @objc func registerButtonAction(sender: UIButton!) {
-//        print("register")
-        navigationController?.pushViewController(UITableViewController(), animated: true)
+        navigationController?.pushViewController(RegisterViewController(), animated: true)
     }
     
     @objc func loginButtonAction(sender: UIButton!) {
-        print("login")
-        navigationController?.pushViewController(HomeViewController(), animated: true)
+        navigationController?.pushViewController(LoginViewController(), animated: true)
     }
 }

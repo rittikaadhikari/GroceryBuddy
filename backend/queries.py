@@ -2,10 +2,13 @@ import psycopg2
 import psycopg2.extras
 import pymongo
 from pymongo import MongoClient
+import pprint
+
 client = MongoClient('3.234.30.163', 27017)
 db = client.grocery_list
 grocery_list = db.grocery_list
 fridge = db.fridge
+recipes = db.recipes2
 conn = psycopg2.connect(dbname='postgres', user='postgres', password='alawini411', host='cs411-project.cm2xo0osnz3p.us-east-1.rds.amazonaws.com', port='5432')
 conn.autocommit = True
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -57,7 +60,8 @@ def insert_into_grocery_list(username, ingredient):
     ans = dict(ans)
     user_id = ans.get("user_id")
     res = grocery_list.update({"user_id":user_id}, {"$push": {"user_ingredients": ingredient}}, upsert=True)
-    res.pop('upserted')
+    if res.get('upserted'):
+        res.pop('upserted')
     return res
 
 def delete_from_grocery_list(username, ingredient):
@@ -141,7 +145,8 @@ def insert_into_fridge(username, ingredient):
         ans = dict(ans)
         ingredient_id = ans.get("ingredient_id")
     res = fridge.update({"user_id":user_id}, {"$push": {"fridge": ingredient_id}}, upsert=True)
-    res.pop('upserted')
+    if res.get('upserted'):
+        res.pop('upserted')
     print(res)
     return res
 
@@ -164,7 +169,6 @@ def delete_from_fridge(username, ingredient):
     return res
 
 def get_fridge(username):
-    print(username)
     query = """select user_id from users where username = %s"""
     params = (username, )
     cur.execute(query, params)
@@ -180,11 +184,13 @@ def get_fridge(username):
         return {"result" : []} 
 
     
-    print(res)
-    query = """select ingredient_name from ingredients where ingredient_id in %s"""
+    query = """select ingredient_name from ingredients2 where ingredient_id in %s"""
     params = tuple(res['fridge']) 
     res = get_dict_resultset(query, (params,))
-    return res 
+    res2 = []
+    for r in res['result']:
+        res2.append(r['ingredient_name'])
+    return {"result": res2} 
 
 def edit_ingredient_in_fridge(username, old_ingredient, new_ingredient):
     res1 = delete_from_fridge(username, old_ingredient)
@@ -202,3 +208,43 @@ def get_recipe_by_id(recipe_id):
 def get_recipes_by_ingredients(ingredient_ids):
     res = recipes.find({"ingredients": {"$all": ingredient_ids}})
     return res
+
+def scheduler(username, week):
+    #query = """SELECT * FROM ingredients2"""
+    #ingredients = get_dict_resultset(query, None)
+    #res = list(recipes.find())
+    #return res[0]
+   
+    ## find user
+    query = """select user_id from users where username = %s"""
+    params = (username, )
+    cur.execute(query, params)
+    ans = cur.fetchone()
+    if not ans:
+        return None
+    ans = dict(ans)
+    user_id = ans.get("user_id")
+
+    ## get user's fridge
+    user_fridge = fridge.find_one({"user_id":user_id}, {"fridge": 1, "_id": 0})['fridge']
+    print(user_fridge) 
+
+    ## get all recipe candidates (recipes that use ingredients only available from the fridge)
+    user_recipes = recipes.find({"$expr": {"$setIsSubset": ["$ingredient_ids", user_fridge]}})
+    for recipe in user_recipes:
+        print(recipe['ingredient_ids'], recipe['recipe']['title'])
+    
+    ## get user's schedule
+    query = """select * from possible_schedules P where P.user_id = %s and P.week = %s"""
+    params = (user_id, week)
+    cur.execute(query, params)
+    user_schedule = cur.fetchone()
+    if not ans:
+        return None
+    user_schedule = dict(user_schedule)
+    time_available = user_schedule['time_available']
+    num_recipes = user_schedule['num_recipes']
+
+    ## maximization problem
+
+scheduler('joker', 1)

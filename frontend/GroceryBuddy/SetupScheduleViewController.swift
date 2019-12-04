@@ -9,6 +9,7 @@
 import UIKit
 import Eureka
 import Alamofire
+import SwiftyJSON
 
 class SetupScheduleViewController: FormViewController {
 
@@ -59,7 +60,7 @@ class SetupScheduleViewController: FormViewController {
             }
     }
     
-    func postRequest(week: Int, time_avail: Int, num_meals: Int) {
+    func postRequest(week: Int, time_avail: Int, num_meals: Int, completionHandler: @escaping (Int?) -> ()) {
         let url = "http://3.228.111.41/schedule"
 
         let parameters = [
@@ -73,38 +74,32 @@ class SetupScheduleViewController: FormViewController {
             switch response.result {
             case .success:
                 print("success")
+                completionHandler(week)
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    func getRequest(week: Int, completionHandler: @escaping ([String]?) -> ()) {
-        let url = "http://3.228.111.41/schedule"
+    func getRequest(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+        let url = "http://3.228.111.41/mealschedules?username=" + username + "&week=" + String(week)
+        print(url)
         
-        let parameters = [
-            "username": username,
-            "week": week
-            ] as [String : Any]
-        
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+        AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                guard let json = response.value as? [String: Any] else {
-                  print("didn't get object as JSON from API")
-                  if let error = response.error {
-                    print("Error: \(error)")
-                  }
-                  return
+                let json = JSON(response.value)
+                var names = [String]()
+                var imageLinks = [String]()
+                if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
+                    for item in recipes_main {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                            names.append(name)
+                            imageLinks.append(imageLink)
+                        }
+                    }
                 }
-                print(json)
-                guard let result = json["result"] as? [String: Any], let userIngredients = result["user_ingredients"] as? [String] else {
-                  print("Could not get user ingredients from JSON")
-                  completionHandler([] as? [String])
-                  return
-                }
-                print(userIngredients)
-                completionHandler(userIngredients as? [String])
+                completionHandler((names as? [String], imageLinks as? [String]))
             case .failure(let error):
                 print(error)
             }
@@ -121,13 +116,17 @@ class SetupScheduleViewController: FormViewController {
             if let week = week as! Int?,
                 let time_avail = time_avail as! Int?,
                 let num_meals = num_meals as! Int? {
-                postRequest(week: week, time_avail: time_avail, num_meals: num_meals)
-                
-                let ingredientsTable = SearchIngredientViewController()
-//                getRequest(week: week, completionHandler: { (result) in
-//                    ingredientsTable.recipes = result!
-//                    self.navigationController?.pushViewController(ingredientsTable, animated: true)
-//                })
+                postRequest(week: week, time_avail: time_avail, num_meals: num_meals) { (result) in
+                    let searchController = SearchIngredientViewController()
+                    self.getRequest(week: week) { (result) in
+                        searchController.recipeNames = result.names!
+                        searchController.recipeImages = result.imageLinks!
+                        searchController.justBrowsing = false
+                        searchController.week = week
+                        searchController.username = self.username
+                        self.navigationController?.pushViewController(searchController, animated: true)
+                    }
+                }
             }
         } else {
             let alert = UIAlertController(title: "Missing items", message: "Please enter preference information", preferredStyle: .alert)

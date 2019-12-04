@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A766FFFBDA4001E13738CB4 /* Pods_GroceryBuddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26412482034A34B322B2C6C4 /* Pods_GroceryBuddy.framework */; };
+		9D3A50542398523F00734C31 /* ScheduleChartJoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A50532398523F00734C31 /* ScheduleChartJoin.swift */; };
 		FA267DAC236B9EC4003B4AB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA267DAB236B9EC4003B4AB9 /* AppDelegate.swift */; };
 		FA267DB5236B9EC9003B4AB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA267DB4236B9EC9003B4AB9 /* Assets.xcassets */; };
 		FA267DB8236B9EC9003B4AB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA267DB6236B9EC9003B4AB9 /* LaunchScreen.storyboard */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		26412482034A34B322B2C6C4 /* Pods_GroceryBuddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GroceryBuddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D3A50532398523F00734C31 /* ScheduleChartJoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleChartJoin.swift; sourceTree = "<group>"; };
 		A06CE07AFC01E304FD0255F3 /* Pods-GroceryBuddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryBuddy.debug.xcconfig"; path = "Target Support Files/Pods-GroceryBuddy/Pods-GroceryBuddy.debug.xcconfig"; sourceTree = "<group>"; };
 		CAFC4A5E4607956815CAB453 /* Pods-GroceryBuddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryBuddy.release.xcconfig"; path = "Target Support Files/Pods-GroceryBuddy/Pods-GroceryBuddy.release.xcconfig"; sourceTree = "<group>"; };
 		FA267DA8236B9EC4003B4AB9 /* GroceryBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroceryBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				FABD000123977F340040E3B1 /* SetupScheduleViewController.swift */,
+				9D3A50532398523F00734C31 /* ScheduleChartJoin.swift */,
 			);
 			name = Schedule;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA267DAC236B9EC4003B4AB9 /* AppDelegate.swift in Sources */,
+				9D3A50542398523F00734C31 /* ScheduleChartJoin.swift in Sources */,
 				FAF14883238E109D0041703A /* LaunchViewController.swift in Sources */,
 				FAFE2627236BEE55002A6D2F /* TableViewController.swift in Sources */,
 				FAF14887238E21000041703A /* RegisterViewController.swift in Sources */,

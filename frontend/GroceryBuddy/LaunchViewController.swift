@@ -11,45 +11,44 @@ import UIKit
 class LaunchViewController: UIViewController {
 
     lazy var titleLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 100, width: view.frame.size.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 100, width: view.frame.size.width, height: 80))
         label.text = "Grocery Buddy"
-        label.textColor = .white
-        label.backgroundColor = .black
         label.textAlignment = .center
+        label.textColor = .white
+        label.backgroundColor = UIColor(red: 66.0/255.0, green: 66.0/255.0, blue: 66.0/255.0, alpha: 1.0)
         label.font = UIFont.boldSystemFont(ofSize: 40.0)
         return label
     }()
     
-    lazy var authorLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 350, width: view.frame.size.width / 1.5, height: 50))
+    lazy var authorLabel: PaddingLabel = {
+        let label = PaddingLabel(frame: CGRect(x: 0, y: 450, width: view.frame.size.width / 1.2, height: 50))
         label.text = "By Rittika Adhikari, Utkarsh Awasthi, Andy Chai, and Shoji Moto"
         label.textAlignment = .center
         label.textColor = .white
-        label.backgroundColor = .black
+        label.backgroundColor = UIColor(red: 66.0/255.0, green: 66.0/255.0, blue: 66.0/255.0, alpha: 1.0)
         label.font = UIFont.systemFont(ofSize: 16.0)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.sizeToFit()
         return label
     }()
     
     lazy var registerButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 50, y: 250, width: 130, height: 50))
+        let button = UIButton(frame: CGRect(x: 40, y: 330, width: 130, height: 50))
         button.setTitle("Register", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
-        button.layer.cornerRadius = 4
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(registerButtonAction), for: .touchUpInside)
         
         return button
     }()
     
     lazy var loginButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 250, y: 250, width: 130, height: 50))
+        let button = UIButton(frame: CGRect(x: 250, y: 330, width: 130, height: 50))
         button.setTitle("Log In", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
-        button.layer.cornerRadius = 4
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
         
         return button

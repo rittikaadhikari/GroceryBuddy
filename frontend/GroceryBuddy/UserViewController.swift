@@ -45,7 +45,7 @@ class UserViewController: UIViewController {
     
     lazy var scheduleButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 100, y: 310, width: 220, height: 50))
-        button.setTitle("View Potential Schedule", for: .normal)
+        button.setTitle("View Potential Schedules", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
         button.layer.cornerRadius = 10
@@ -182,7 +182,8 @@ class UserViewController: UIViewController {
                                    completion: { Void in()  }
         )
         
-        let scheduleView = UIViewController()
+        let scheduleView = SetupScheduleViewController()
+        scheduleView.username = username
         self.navigationController?.pushViewController(scheduleView, animated: true)
     }
 }

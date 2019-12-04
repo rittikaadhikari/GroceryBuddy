@@ -8,4 +8,8 @@ target 'GroceryBuddy' do
   # Pods for GroceryBuddy
   pod 'Eureka'
   pod 'Alamofire', '~> 5.0.0-rc.3'
+  pod 'SDWebImage', '~> 5.0'
+  pod 'SwiftyJSON', '~> 4.0'
+  pod 'PMAlertController'
+
 end

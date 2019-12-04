@@ -13,6 +13,7 @@
 		FA267DB8236B9EC9003B4AB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA267DB6236B9EC9003B4AB9 /* LaunchScreen.storyboard */; };
 		FA267DC0236BA279003B4AB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */; };
 		FA49A83C23946B55001D334E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49A83B23946B55001D334E /* LoginViewController.swift */; };
+		FABD000223977F350040E3B1 /* SetupScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD000123977F340040E3B1 /* SetupScheduleViewController.swift */; };
 		FABDFFFF23976F790040E3B1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABDFFFE23976F790040E3B1 /* PaddingLabel.swift */; };
 		FAEA1AA1236BBD1400A41926 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA0236BBD1400A41926 /* UserViewController.swift */; };
 		FAEA1AA5236BC03600A41926 /* IngredientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */; };
@@ -38,6 +39,7 @@
 		FA267DB9236B9EC9003B4AB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FA49A83B23946B55001D334E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		FABD000123977F340040E3B1 /* SetupScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScheduleViewController.swift; sourceTree = "<group>"; };
 		FABDFFFE23976F790040E3B1 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		FAEA1AA0236BBD1400A41926 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		FA267DAA236B9EC4003B4AB9 /* GroceryBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				FABD000023977EFC0040E3B1 /* Schedule */,
 				FABDFFFD23976F540040E3B1 /* Utils */,
 				FABDFFFC239754700040E3B1 /* Tables */,
 				FA49A83A23946B1C001D334E /* StartFlow */,
@@ -126,6 +129,14 @@
 				26412482034A34B322B2C6C4 /* Pods_GroceryBuddy.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FABD000023977EFC0040E3B1 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				FABD000123977F340040E3B1 /* SetupScheduleViewController.swift */,
+			);
+			name = Schedule;
 			sourceTree = "<group>";
 		};
 		FABDFFFC239754700040E3B1 /* Tables */ = {
@@ -276,6 +287,7 @@
 				FAFE2627236BEE55002A6D2F /* TableViewController.swift in Sources */,
 				FAF14887238E21000041703A /* RegisterViewController.swift in Sources */,
 				FAFE2623236BD250002A6D2F /* AddIngredientViewController.swift in Sources */,
+				FABD000223977F350040E3B1 /* SetupScheduleViewController.swift in Sources */,
 				FAFE262B236BF1DE002A6D2F /* TableViewCell.swift in Sources */,
 				FA267DC0236BA279003B4AB9 /* SceneDelegate.swift in Sources */,
 				FAFE2629236BF1A8002A6D2F /* ListItem.swift in Sources */,

@@ -22,30 +22,33 @@ class UserViewController: UIViewController {
     }()
     
     lazy var itemsButton: UIButton = {
-        let button = UIButton.init(type: .system)
-        button.frame = CGRect(x: 0, y: 170, width: view.frame.size.width, height: 50)
+        let button = UIButton(frame: CGRect(x: 100, y: 170, width: 220, height: 50))
         button.setTitle("View Grocery List", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(listButtonAction), for: .touchUpInside)
         
         return button
     }()
     
     lazy var fridgeButton: UIButton = {
-        let button = UIButton.init(type: .system)
-        button.frame = CGRect(x: 0, y: 220, width: view.frame.size.width, height: 50)
+        let button = UIButton(frame: CGRect(x: 100, y: 240, width: 220, height: 50))
         button.setTitle("View Fridge", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(fridgeButtonAction), for: .touchUpInside)
         
         return button
     }()
     
     lazy var scheduleButton: UIButton = {
-        let button = UIButton.init(type: .system)
-        button.frame = CGRect(x: 0, y: 270, width: view.frame.size.width, height: 50)
-        button.setTitle("View Potential Schedule", for: .normal)
+        let button = UIButton(frame: CGRect(x: 100, y: 310, width: 220, height: 50))
+        button.setTitle("View Potential Schedules", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(scheduleButtonAction), for: .touchUpInside)
         
         return button
@@ -120,6 +123,19 @@ class UserViewController: UIViewController {
     }
     
     @objc func listButtonAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+        UIView.animate(withDuration: 2.0,
+                                   delay: 0,
+                                   usingSpringWithDamping: CGFloat(0.20),
+                                   initialSpringVelocity: CGFloat(6.0),
+                                   options: UIView.AnimationOptions.allowUserInteraction,
+                                   animations: {
+                                    sender.transform = CGAffineTransform.identity
+            },
+                                   completion: { Void in()  }
+        )
+        
         let ingredientsTable = IngredientTableViewController()
         ingredientsTable.username = username
         getRequest { (result) in
@@ -130,6 +146,19 @@ class UserViewController: UIViewController {
     }
     
     @objc func fridgeButtonAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+        UIView.animate(withDuration: 2.0,
+                                   delay: 0,
+                                   usingSpringWithDamping: CGFloat(0.20),
+                                   initialSpringVelocity: CGFloat(6.0),
+                                   options: UIView.AnimationOptions.allowUserInteraction,
+                                   animations: {
+                                    sender.transform = CGAffineTransform.identity
+            },
+                                   completion: { Void in()  }
+        )
+        
         let ingredientsTable = IngredientTableViewController()
         ingredientsTable.username = username
         getRequestFridge { (result) in
@@ -140,14 +169,21 @@ class UserViewController: UIViewController {
     }
     
     @objc func scheduleButtonAction(sender: UIButton!) {
-        let scheduleView = UIViewController()
+        sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+        UIView.animate(withDuration: 2.0,
+                                   delay: 0,
+                                   usingSpringWithDamping: CGFloat(0.20),
+                                   initialSpringVelocity: CGFloat(6.0),
+                                   options: UIView.AnimationOptions.allowUserInteraction,
+                                   animations: {
+                                    sender.transform = CGAffineTransform.identity
+            },
+                                   completion: { Void in()  }
+        )
+        
+        let scheduleView = SetupScheduleViewController()
+        scheduleView.username = username
         self.navigationController?.pushViewController(scheduleView, animated: true)
-//        let ingredientsTable = IngredientTableViewController()
-//        ingredientsTable.username = username
-//        getRequestFridge { (result) in
-//            ingredientsTable.ingredients = result!
-//            ingredientsTable.isFridge = true
-//            self.navigationController?.pushViewController(ingredientsTable, animated: true)
-//        }
     }
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Shoji Moto. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import Alamofire
 
@@ -64,9 +65,22 @@ class IngredientTableViewController: UITableViewController {
     }
     
     func deleteRequest(ingredientName: String) {
-        var url = "http://3.228.111.41/list?username=" + username + "&ingredient=" + ingredientName
+        let ingredientArray = ingredientName.split(separator: " ")
+        var ingredientFinal = ""
+        if ingredientArray.count > 1 {
+            var ingredientNameNew = ""
+            for i in 0..<ingredientArray.count - 1 {
+                ingredientNameNew += ingredientArray[i] + "%20"
+            }
+            ingredientNameNew += ingredientArray[ingredientArray.count - 1]
+            ingredientFinal = ingredientNameNew
+        } else {
+            ingredientFinal = ingredientName
+        }
+        
+        var url = "http://3.228.111.41/list?username=" + username + "&ingredient=" + ingredientFinal
         if isFridge {
-            url = "http://3.228.111.41/fridge?username=" + username + "&ingredient=" + ingredientName
+            url = "http://3.228.111.41/fridge?username=" + username + "&ingredient=" + ingredientFinal
         }
         
         AF.request(url, method: .delete, encoding: URLEncoding.default).responseJSON { response in

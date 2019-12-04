@@ -17,6 +17,7 @@ class SearchIngredientViewController: UIViewController {
     var recipeNames = [String]()
     var recipeImages = [String]()
     var recipeSteps = [String]()
+    var recipeIngredients = [String]()
     var justBrowsing:Bool = true
     var week:Int = 1
     var username:String = ""
@@ -54,7 +55,7 @@ class SearchIngredientViewController: UIViewController {
 
     }
     
-    func getRequestBrowsing(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
+    func getRequestBrowsing(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?, ingredientList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/recipes"
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
@@ -64,23 +65,29 @@ class SearchIngredientViewController: UIViewController {
                 var names = [String]()
                 var imageLinks = [String]()
                 var stepsList = [String]()
+                var ingredientList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string, let ingredient = item["recipe"]["ingredients"].array {
                             names.append(name)
                             imageLinks.append(imageLink)
                             stepsList.append(steps)
+                            var ingredients = ""
+                            for ingred in ingredient {
+                                ingredients += ingred.string! + "\n"
+                            }
+                            ingredientList.append(ingredients)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String], ingredientList as? [String]))
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    func getRequestSchedule(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
+    func getRequestSchedule(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?, ingredientList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/refreshschedule"
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
@@ -90,16 +97,22 @@ class SearchIngredientViewController: UIViewController {
                 var names = [String]()
                 var imageLinks = [String]()
                 var stepsList = [String]()
+                var ingredientList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string, let ingredient = item["recipe"]["ingredients"].array {
                             names.append(name)
                             imageLinks.append(imageLink)
                             stepsList.append(steps)
+                            var ingredients = ""
+                            for ingred in ingredient {
+                                ingredients += ingred.string! + "\n"
+                            }
+                            ingredientList.append(ingredients)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String], ingredientList as? [String]))
             case .failure(let error):
                 print(error)
             }
@@ -112,6 +125,7 @@ class SearchIngredientViewController: UIViewController {
                 self.recipeNames = result.names!
                 self.recipeImages = result.imageLinks!
                 self.recipeSteps = result.stepsList!
+                self.recipeIngredients = result.ingredientList!
                 self.collectionView.reloadData()
             }
         } else {
@@ -119,6 +133,7 @@ class SearchIngredientViewController: UIViewController {
                 self.recipeNames = result.names!
                 self.recipeImages = result.imageLinks!
                 self.recipeSteps = result.stepsList!
+                self.recipeIngredients = result.ingredientList!
                 self.collectionView.reloadData()
             }
         }
@@ -171,8 +186,9 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         let dishName = recipeNames[indexPath.row]
         let dishImage = recipeImages[indexPath.row]
         let steps = recipeSteps[indexPath.row]
+        let ingred = recipeIngredients[indexPath.row]
         
-        let alert = UIAlertController(title: "How to Cook " + dishName + ":", message: steps, preferredStyle: .alert)
+        let alert = UIAlertController(title: "How to Cook " + dishName + ":", message: ingred + "\n" + steps, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

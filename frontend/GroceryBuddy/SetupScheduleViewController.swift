@@ -81,7 +81,7 @@ class SetupScheduleViewController: FormViewController {
         }
     }
     
-    func getRequest(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
+    func getRequest(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?, ingredientList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/mealschedules?username=" + username + "&week=" + String(week)
         print(url)
         
@@ -92,16 +92,22 @@ class SetupScheduleViewController: FormViewController {
                 var names = [String]()
                 var imageLinks = [String]()
                 var stepsList = [String]()
+                var ingredientList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string, let ingredient = item["recipe"]["ingredients"].array {
                             names.append(name)
                             imageLinks.append(imageLink)
                             stepsList.append(steps)
+                            var ingredients = ""
+                            for ingred in ingredient {
+                                ingredients += ingred.string! + "\n"
+                            }
+                            ingredientList.append(ingredients)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String], ingredientList as? [String]))
             case .failure(let error):
                 print(error)
             }
@@ -124,6 +130,7 @@ class SetupScheduleViewController: FormViewController {
                         searchController.recipeNames = result.names!
                         searchController.recipeImages = result.imageLinks!
                         searchController.recipeSteps = result.stepsList!
+                        searchController.recipeIngredients = result.ingredientList!
                         searchController.justBrowsing = false
                         searchController.week = week
                         searchController.username = self.username

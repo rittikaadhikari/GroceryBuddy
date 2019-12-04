@@ -57,10 +57,14 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        let title = UILabel(frame: CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: 40))
+        let title = UILabel(frame: CGRect(x: 0, y: 15, width: cell.bounds.size.width, height: 20))
+        title.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
         title.textColor = UIColor.black
         title.text = recipeNames[indexPath.row]
         title.textAlignment = .center
+        title.numberOfLines = 0
+        title.adjustsFontSizeToFitWidth = true
+        
         cell.contentView.addSubview(title)
         cell.backgroundColor = .lightGray
         cell.layer.cornerRadius = 8
@@ -70,7 +74,6 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         imageView.layer.cornerRadius = 8
         imageView.sd_setImage(with: URL(string: recipeImages[indexPath.row]))
         cell.contentView.addSubview(imageView)
-        
         
         return cell
     }

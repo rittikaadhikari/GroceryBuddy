@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchIngredientViewController: UICollectionViewController {
+class SearchIngredientViewController: UIViewController {
     
     var username:String = ""
     
@@ -16,5 +16,6 @@ class SearchIngredientViewController: UICollectionViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "Browse Recipes"
+        self.view.backgroundColor = .white
     }
 }

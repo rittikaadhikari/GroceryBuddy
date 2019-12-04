@@ -106,8 +106,8 @@ def create_ingredient(ingredient_name, ingredient_category):
 
 
 def get_ingredient(ingredient_name):
-    query = """SELECT * FROM ingredients2 where ingredient_name = %s"""
-    params = (ingredient_name,)
+    query = """select * from ingredients2 where ingredient_name ilike %s limit 1"""
+    params = ('%' + ingredient_name + '%',)
     return get_dict_resultset(query, params)
 
 def get_ingredient_by_category(ingredient_category):
@@ -304,7 +304,6 @@ def get_meal_schedule(username, week):
             potential_combos.append((combo, total_time, len(ingredients_used)))
 
     potential_combos = sorted(potential_combos, key=lambda x: (-x[2], x[1]))
-    print(potential_combos)
     global combo_meals, num_refreshes
     num_refreshes = 0
     combo_meals = [[user_recipes_list[i] for i in list(combo[0])] for combo in potential_combos]
@@ -323,3 +322,4 @@ def refresh_schedule():
 #print(refresh_schedule())
 #print(refresh_schedule())
 #print(refresh_schedule())
+#print(get_ingredient('garlic'))

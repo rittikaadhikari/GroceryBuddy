@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class UserViewController: UIViewController {
     
@@ -134,6 +135,28 @@ class UserViewController: UIViewController {
         }
     }
     
+    func getRequestJoinSchedule(completionHandler: @escaping ([Int]?) -> ()) {
+        let url = "http://3.228.111.41/schedule?username=" + username
+        
+        AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                let json = JSON(response.value)
+                var num_recipes = [Int]()
+                if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
+                    for item in recipes_main {
+                        if let recipe = item["num_recipes"].int {
+                            num_recipes.append(recipe)
+                        }
+                    }
+                }
+                completionHandler(num_recipes as? [Int])
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     @objc func listButtonAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
 
@@ -213,7 +236,10 @@ class UserViewController: UIViewController {
                                    completion: { Void in()  }
         )
         
-        let scheduleView = ScheduleChartController()
-        self.navigationController?.pushViewController(scheduleView, animated: true)
+        getRequestJoinSchedule { (result) in
+            let scheduleView = ScheduleChartController()
+            scheduleView.num_recipes = result!
+            self.navigationController?.pushViewController(scheduleView, animated: true)
+        }
     }
 }

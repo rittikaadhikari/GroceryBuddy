@@ -102,6 +102,17 @@ def get_ingredient(username):
         return create_response(res, 200, "OK")
     return create_response({}, 404, "Not Found")
 
+@app.route('/autocomplete_ingredients', methods=['GET'])
+def autocomplete_ingredient():
+    data = request.args
+    ingredient_name = data.get("ingredient_name")
+    print("JESUS CHRISTO: ", data.get("ingredient_name"))
+    if ingredient_name:
+        res = psql.autocomplete_ingredients(ingredient_name)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
 @app.route('/allingredients', methods=['GET'])
 def get_ingredients():
     res = psql.get_ingredients()
@@ -228,8 +239,17 @@ def add_schedule():
     return create_response({}, 404, "Not Found")
 
 @app.route('/schedule', methods=['GET'])
+def get_user_schedule():
+    data = request.args
+    username = data.get("username")
+    res = psql.display_schedule(username)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+@app.route('/mealschedules', methods=['GET'])
 def get_meal_schedule():
-    data = request.form
+    data = request.args
     username = data.get("username")
     week = data.get("week")
     res = psql.get_meal_schedule(username, week)
@@ -237,6 +257,13 @@ def get_meal_schedule():
         return create_response(res, 200, "OK")
     return create_response(res, 404, "Not Found")
 
+@app.route('/refreshschedule', methods=['GET'])
+def refresh_meal_schedule():
+    res = psql.refresh_schedule()
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response(res, 404, "Not Found")
+######################################################################################################
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0', port=80)

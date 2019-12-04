@@ -54,6 +54,7 @@ class HomeViewController: UITabBarController {
         getRequest { (result) in
             searchController.recipeNames = result.names!
             searchController.recipeImages = result.imageLinks!
+            searchController.justBrowsing = true
         }
         navigationController3.pushViewController(searchController, animated: false)
 

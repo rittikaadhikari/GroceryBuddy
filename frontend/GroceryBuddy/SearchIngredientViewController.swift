@@ -15,6 +15,10 @@ class SearchIngredientViewController: UIViewController {
     
     var recipeNames = [String]()
     var recipeImages = [String]()
+    var recipeSteps = [String]()
+    var justBrowsing:Bool = true
+    var week:Int = 1
+    var username:String = ""
     
     fileprivate let collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -47,7 +51,7 @@ class SearchIngredientViewController: UIViewController {
 
     }
     
-    func getRequest(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+    func getRequestBrowsing(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
         let url = "http://3.228.111.41/recipes"
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
@@ -71,11 +75,43 @@ class SearchIngredientViewController: UIViewController {
         }
     }
     
+    func getRequestSchedule(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+        let url = "http://3.228.111.41/refreshschedule"
+        
+        AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                let json = JSON(response.value)
+                var names = [String]()
+                var imageLinks = [String]()
+                if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
+                    for item in recipes_main {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                            names.append(name)
+                            imageLinks.append(imageLink)
+                        }
+                    }
+                }
+                completionHandler((names as? [String], imageLinks as? [String]))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     @objc func onRefresh() {
-        getRequest { (result) in
-            self.recipeNames = result.names!
-            self.recipeImages = result.imageLinks!
-            self.collectionView.reloadData()
+        if justBrowsing {
+            getRequestBrowsing { (result) in
+                self.recipeNames = result.names!
+                self.recipeImages = result.imageLinks!
+                self.collectionView.reloadData()
+            }
+        } else {
+            getRequestSchedule(week: week) { (result) in
+                self.recipeNames = result.names!
+                self.recipeImages = result.imageLinks!
+                self.collectionView.reloadData()
+            }
         }
     }
 }

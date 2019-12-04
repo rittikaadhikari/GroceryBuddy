@@ -92,6 +92,7 @@
 		FA267DAA236B9EC4003B4AB9 /* GroceryBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				FABDFFFC239754700040E3B1 /* Tables */,
 				FA49A83A23946B1C001D334E /* StartFlow */,
 				FAF14881238E0D640041703A /* IngredientControllers */,
 				FAEA1AA8236BD1E900A41926 /* Podfile */,
@@ -101,9 +102,6 @@
 				FA267DB4236B9EC9003B4AB9 /* Assets.xcassets */,
 				FA267DB6236B9EC9003B4AB9 /* LaunchScreen.storyboard */,
 				FA267DB9236B9EC9003B4AB9 /* Info.plist */,
-				FAFE2626236BEE55002A6D2F /* TableViewController.swift */,
-				FAFE2628236BF1A8002A6D2F /* ListItem.swift */,
-				FAFE262A236BF1DD002A6D2F /* TableViewCell.swift */,
 				FAF14884238E1AC70041703A /* HomeViewController.swift */,
 			);
 			path = GroceryBuddy;
@@ -125,6 +123,16 @@
 				26412482034A34B322B2C6C4 /* Pods_GroceryBuddy.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FABDFFFC239754700040E3B1 /* Tables */ = {
+			isa = PBXGroup;
+			children = (
+				FAFE2626236BEE55002A6D2F /* TableViewController.swift */,
+				FAFE2628236BF1A8002A6D2F /* ListItem.swift */,
+				FAFE262A236BF1DD002A6D2F /* TableViewCell.swift */,
+			);
+			name = Tables;
 			sourceTree = "<group>";
 		};
 		FAF14881238E0D640041703A /* IngredientControllers */ = {

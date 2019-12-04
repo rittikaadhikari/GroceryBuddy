@@ -59,6 +59,11 @@ class UserViewController: UIViewController {
         self.view.addSubview(itemsButton)
         self.view.addSubview(fridgeButton)
         self.view.addSubview(scheduleButton)
+        
+        let groceryImage = UIImageView(frame: CGRect(x: 180, y: 500, width: 50, height: 200))
+        groceryImage.image = UIImage(named: "GroceryBag")
+        groceryImage.contentMode = UIView.ContentMode.scaleAspectFill
+        self.view.addSubview(groceryImage)
     }
     
     func getRequest(completionHandler: @escaping ([String]?) -> ()) {

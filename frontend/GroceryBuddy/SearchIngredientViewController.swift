@@ -10,11 +10,13 @@ import UIKit
 import SDWebImage
 import Alamofire
 import SwiftyJSON
+import PMAlertController
 
 class SearchIngredientViewController: UIViewController {
     
     var recipeNames = [String]()
     var recipeImages = [String]()
+    
     
     fileprivate let collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,6 +29,7 @@ class SearchIngredientViewController: UIViewController {
         
         return cv
     }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +94,7 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let title = UILabel(frame: CGRect(x: 0, y: 15, width: cell.bounds.size.width, height: 20))
         title.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
@@ -116,10 +120,30 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         imageView.layer.cornerRadius = 8
         imageView.sd_setImage(with: URL(string: recipeImages[indexPath.row]))
         cell.addSubview(imageView)
+
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        print("Hello" , indexPath)
+//        let alert = UIAlertController(title: "Steps to complete", message: "Please enter preference information", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+        let dishName = recipeNames[indexPath.row]
+        let dishImage = recipeImages[indexPath.row]
+        
+        let alertVC = PMAlertController(title: "How to Cook " + dishName + ":", description: "1. Do this and that and this! 2. Do that and this and that", image: UIImage(named: dishImage), style: .alert)
+
+
+        alertVC.addAction(PMAlertAction(title: "Close", style: .cancel, action: { () in
+                    print("Capture action Close")
+                }))
+
+
+        self.present(alertVC, animated: true, completion: nil)
+    }
+
 }
 
  

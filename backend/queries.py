@@ -1,5 +1,6 @@
 import psycopg2
 import psycopg2.extras
+from psycopg2.extensions import AsIs
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps
@@ -11,11 +12,13 @@ client = MongoClient('3.234.30.163', 27017)
 db = client.grocery_list
 grocery_list = db.grocery_list
 fridge = db.fridge
-recipes = db.recipes3
+recipes = db.recipes4
 conn = psycopg2.connect(dbname='postgres', user='postgres', password='alawini411', host='cs411-project.cm2xo0osnz3p.us-east-1.rds.amazonaws.com', port='5432')
 conn.autocommit = True
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 recipe_pos = 0
+combo_meals = []
+num_refreshes = 0
 
 def get_dict_resultset(sql, params):
     cur.execute (sql, params)
@@ -112,9 +115,9 @@ def get_ingredient_by_category(ingredient_category):
     params = (ingredient_category,)
     return get_dict_resultset(query, params)
 
-def get_ingredients():
-    query = """SELECT ingredients2.ingredient_name FROM ingredients2"""
-    params = ()
+def autocomplete_ingredients(ingredient_name):
+    query = """SELECT ingredients2.ingredient_name FROM ingredients2 where ingredients2.ingredient_name ilike %s"""
+    params = (ingredient_name + "%", )
     return get_dict_resultset(query, params)
 
 def update_ingredient(oingredient, ningredient, ncategory):
@@ -227,9 +230,18 @@ def add_schedule(username, week, time_available, num_meals):
     ans = dict(ans)
     user_id = ans.get("user_id")
 
+    query = """DELETE FROM possible_schedules where user_id = %s returning *"""
+    params = (user_id, )
+    get_dict_resultset(query, params)
+
     query = """INSERT INTO possible_schedules(user_id, week, time_available, num_recipes) values (%s, %s, %s, %s) returning *"""
     params = (user_id, week, time_available, num_meals)
 
+    return get_dict_resultset(query, params)
+
+def display_schedule(username):
+    query = """select U.first_name, U.last_name, S.week, S.time_available, S.num_recipes from users as U, possible_schedules as S where U.username = %s and S.user_id = U.user_id"""
+    params = (username, )
     return get_dict_resultset(query, params)
 
 def get_meal_schedule(username, week):
@@ -246,8 +258,21 @@ def get_meal_schedule(username, week):
     ## get user's fridge
     user_fridge = fridge.find_one({"user_id":user_id}, {"fridge": 1, "_id": 0})['fridge']
 
-    ## get all recipe candidates (recipes that use ingredients only available from the fridge)
-    user_recipes = recipes.find({"$expr": {"$setIsSubset": ["$ingredient_ids", user_fridge]}})
+    ## create a view of recipes with ingredients without "seasoning" (working under the assumption that most people will have seasoning in their pantry)
+    if 'without_seasoning' not in db.list_collection_names():
+        ## get all pantry ingredient ids
+        query = """select I.ingredient_id from ingredients2 as I where I.ingredient_category = 'seasonings'"""
+        params = ()
+        ans = get_dict_resultset(query, params)['result']
+        pantry_ids = [dict_['ingredient_id'] for dict_ in ans]
+
+        ## create a view
+        db.command( { "create": "without_seasoning", "viewOn": "recipes4", "pipeline": [{"$unwind": "$ingredient_ids"}, {"$match": {"ingredient_ids": {"$nin": pantry_ids}}}, {"$group": {"_id": "$_id", "filtered_ingredients": {"$push": "$ingredient_ids"}}}]})
+
+    ## get all recipe candidates (recipes that use ingredients only available from the fridge, while ignoring seasoning)
+    recipe_candidate_ids = list(db.without_seasoning.find({"$expr": {"$setIsSubset": ["$filtered_ingredients", user_fridge]}}, {"_id": 1}))
+    recipe_candidate_ids = [dict_['_id'] for dict_ in recipe_candidate_ids]
+    user_recipes = recipes.find({"_id": {"$in": recipe_candidate_ids}})
 
     ## get user's schedule
     query = """select * from possible_schedules P where P.user_id = %s and P.week = %s"""
@@ -265,8 +290,8 @@ def get_meal_schedule(username, week):
     recipe_indices = [i for i in range(user_recipes.count())]
     recipe_combinations = list(itertools.combinations(recipe_indices, num_recipes))
     user_recipes_list = list(user_recipes)
-    potential_combos = list()
 
+    potential_combos = list()
     for combo in recipe_combinations:
         total_time = 0
         num_ingredients = 0
@@ -279,6 +304,22 @@ def get_meal_schedule(username, week):
             potential_combos.append((combo, total_time, len(ingredients_used)))
 
     potential_combos = sorted(potential_combos, key=lambda x: (-x[2], x[1]))
+    print(potential_combos)
+    global combo_meals, num_refreshes
+    num_refreshes = 0
     combo_meals = [[user_recipes_list[i] for i in list(combo[0])] for combo in potential_combos]
-    return {"result":json.loads(dumps(combo_meals))}
+    return {"result":json.loads(dumps(combo_meals[0]))}
 
+def refresh_schedule():
+    global combo_meals, num_refreshes
+    num_refreshes += 1
+
+    if num_refreshes >= len(combo_meals):
+        num_refreshes = 0
+        return {"result": "no more recipes :("}
+    return {"result": json.loads(dumps(combo_meals[num_refreshes]))}
+
+#print(get_meal_schedule('joker', 2))
+#print(refresh_schedule())
+#print(refresh_schedule())
+#print(refresh_schedule())

@@ -65,6 +65,13 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         title.numberOfLines = 0
         title.adjustsFontSizeToFitWidth = true
         
+        for v in cell.subviews {
+            if v.isKind(of: UILabel.self) {
+                v.removeFromSuperview()
+            } else if v.isKind(of: UIImageView.self) {
+                v.removeFromSuperview()
+            }
+        }
         cell.contentView.addSubview(title)
         cell.backgroundColor = .lightGray
         cell.layer.cornerRadius = 8

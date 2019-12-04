@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SearchIngredientViewController: UIViewController {
     
@@ -55,14 +56,21 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) //as! CustomCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let title = UILabel(frame: CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: 40))
         title.textColor = UIColor.black
         title.text = "T"
         title.textAlignment = .center
         cell.contentView.addSubview(title)
-        cell.backgroundColor = .red
+        cell.backgroundColor = .lightGray
         cell.layer.cornerRadius = 8
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 50, width: cell.bounds.size.width, height: 100))
+        imageView.contentMode = .scaleToFill
+        imageView.layer.cornerRadius = 8
+        imageView.sd_setImage(with: URL(string: "https://upload.wikimedia.org/wikipedia/commons/f/f1/2ChocolateChipCookies.jpg"))
+        cell.contentView.addSubview(imageView)
+        
         
         return cell
     }

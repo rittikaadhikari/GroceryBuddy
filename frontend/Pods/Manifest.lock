@@ -1,20 +1,26 @@
 PODS:
   - Alamofire (5.0.0-rc.3)
   - Eureka (5.0.0)
+  - SDWebImage (5.3.3):
+    - SDWebImage/Core (= 5.3.3)
+  - SDWebImage/Core (5.3.3)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
   - Eureka
+  - SDWebImage (~> 5.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Alamofire
     - Eureka
+    - SDWebImage
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
   Eureka: 0f64f477ec8ef6201c6fec143d60ff5c201cf654
+  SDWebImage: 51ab1ce3ebd20dec6665ae8ba25c928da323db41
 
-PODFILE CHECKSUM: 544fac6b78ad043b2ae08896e315867b43628047
+PODFILE CHECKSUM: 204aa53e1dc48e7365051ec44422aa7dc3737477
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

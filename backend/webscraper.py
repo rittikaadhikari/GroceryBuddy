@@ -1,16 +1,16 @@
 from recipe_scrapers import scrape_me
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
-import json 
+import json
 
 recipe_links = set()
 
 for i in range(49):
     if i == 0:
         base_page = 'https://www.simplyrecipes.com/recipes/course/dinner'
-    else: 
+    else:
         base_page = 'https://www.simplyrecipes.com/recipes/course/dinner/page/' + str(i + 1) + '/'
-    
+
     req = Request(base_page, headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
     soup = BeautifulSoup(webpage, 'html.parser')
@@ -19,7 +19,7 @@ for i in range(49):
         if website is not None:
             split_website = website.split('https://www.simplyrecipes.com/recipes/')
             if len(split_website) == 2:
-                if len(split_website[1].split('/')) == 2: 
+                if len(split_website[1].split('/')) == 2:
                     recipe_links.add(website)
 
 recipe_links = list(recipe_links)
@@ -31,9 +31,10 @@ for recipe in recipe_links:
     recipe_json['total_time'] = scraper.total_time()
     recipe_json['ingredients'] = scraper.ingredients()
     recipe_json['instructions'] = scraper.instructions()
+    recipe_json['image'] = scraper.image()
     recipe_jsons.append(recipe_json)
 
-data = {} 
+data = {}
 data['data'] = recipe_jsons
-with open("recipes.json", "w") as write_file:
+with open("recipes2.json", "w") as write_file:
     json.dump(data, write_file)

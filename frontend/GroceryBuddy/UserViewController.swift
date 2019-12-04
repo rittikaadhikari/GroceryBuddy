@@ -182,8 +182,9 @@ class UserViewController: UIViewController {
                                    completion: { Void in()  }
         )
         
-        let scheduleView = SetupScheduleViewController()
-        scheduleView.username = username
+        //let scheduleView = SetupScheduleViewController()
+        let scheduleView = ScheduleChartController()
+        //scheduleView.username = username
         self.navigationController?.pushViewController(scheduleView, animated: true)
     }
 }

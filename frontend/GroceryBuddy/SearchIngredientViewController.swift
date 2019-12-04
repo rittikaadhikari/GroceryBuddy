@@ -174,7 +174,7 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         
         let alert = UIAlertController(title: "How to Cook " + dishName + ":", message: steps, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)≥
+        self.present(alert, animated: true, completion: nil)
     }
 
 }

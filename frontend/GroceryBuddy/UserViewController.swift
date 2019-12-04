@@ -43,7 +43,7 @@ class UserViewController: UIViewController {
     
     lazy var scheduleButton: UIButton = {
         let button = UIButton.init(type: .system)
-        button.frame = CGRect(x: 0, y: 220, width: view.frame.size.width, height: 50)
+        button.frame = CGRect(x: 0, y: 270, width: view.frame.size.width, height: 50)
         button.setTitle("View Potential Schedule", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         button.addTarget(self, action: #selector(scheduleButtonAction), for: .touchUpInside)
@@ -58,6 +58,7 @@ class UserViewController: UIViewController {
         self.view.addSubview(titleLabel)
         self.view.addSubview(itemsButton)
         self.view.addSubview(fridgeButton)
+        self.view.addSubview(scheduleButton)
     }
     
     func getRequest(completionHandler: @escaping ([String]?) -> ()) {
@@ -134,7 +135,8 @@ class UserViewController: UIViewController {
     }
     
     @objc func scheduleButtonAction(sender: UIButton!) {
-        self.navigationController?.pushViewController(UIViewController(), animated: true)
+        let scheduleView = UIViewController()
+        self.navigationController?.pushViewController(scheduleView, animated: true)
 //        let ingredientsTable = IngredientTableViewController()
 //        ingredientsTable.username = username
 //        getRequestFridge { (result) in

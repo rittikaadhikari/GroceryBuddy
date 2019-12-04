@@ -217,6 +217,7 @@ def get_recipes():
 ######################################################################################################
 @app.route('/schedule', methods=['POST'])
 def add_schedule(username, week, time_available, num_meals):
+    print(username, week, time_available, num_meals)
     res = psql.add_schedule(username, week, time_available, num_meals)
     if res:
         return create_response(res, 200, "OK")

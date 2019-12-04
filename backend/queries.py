@@ -8,7 +8,7 @@ client = MongoClient('3.234.30.163', 27017)
 db = client.grocery_list
 grocery_list = db.grocery_list
 fridge = db.fridge
-recipes = db.recipes2
+recipes = db.recipes3
 conn = psycopg2.connect(dbname='postgres', user='postgres', password='alawini411', host='cs411-project.cm2xo0osnz3p.us-east-1.rds.amazonaws.com', port='5432')
 conn.autocommit = True
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)

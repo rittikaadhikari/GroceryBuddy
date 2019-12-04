@@ -108,6 +108,10 @@ class RegisterViewController: FormViewController {
                 homeViewController.username = username
                 navigationController?.setViewControllers([homeViewController], animated: true)
             }
+        } else {
+            let alert = UIAlertController(title: "Missing username/password", message: "Please enter account information", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

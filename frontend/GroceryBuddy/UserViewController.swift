@@ -41,11 +41,12 @@ class UserViewController: UIViewController {
         return button
     }()
     
-    lazy var addItemButton: UIButton = {
+    lazy var scheduleButton: UIButton = {
         let button = UIButton.init(type: .system)
-        button.frame = CGRect(x: 0, y: 300, width: view.frame.size.width, height: 50)
-        button.setTitle("Add New Item", for: .normal)
-        button.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 220, width: view.frame.size.width, height: 50)
+        button.setTitle("View Potential Schedule", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        button.addTarget(self, action: #selector(scheduleButtonAction), for: .touchUpInside)
         
         return button
     }()
@@ -57,7 +58,6 @@ class UserViewController: UIViewController {
         self.view.addSubview(titleLabel)
         self.view.addSubview(itemsButton)
         self.view.addSubview(fridgeButton)
-        //    self.view.addSubview(addItemButton)
     }
     
     func getRequest(completionHandler: @escaping ([String]?) -> ()) {
@@ -133,7 +133,14 @@ class UserViewController: UIViewController {
         }
     }
     
-    @objc func addButtonAction(sender: UIButton!) {
-        navigationController?.pushViewController(UITableViewController(), animated: true)
+    @objc func scheduleButtonAction(sender: UIButton!) {
+        self.navigationController?.pushViewController(UIViewController(), animated: true)
+//        let ingredientsTable = IngredientTableViewController()
+//        ingredientsTable.username = username
+//        getRequestFridge { (result) in
+//            ingredientsTable.ingredients = result!
+//            ingredientsTable.isFridge = true
+//            self.navigationController?.pushViewController(ingredientsTable, animated: true)
+//        }
     }
 }

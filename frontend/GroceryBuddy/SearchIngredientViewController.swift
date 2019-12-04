@@ -168,23 +168,13 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print("Hello" , indexPath)
-//        let alert = UIAlertController(title: "Steps to complete", message: "Please enter preference information", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-//        self.present(alert, animated: true, completion: nil)
         let dishName = recipeNames[indexPath.row]
         let dishImage = recipeImages[indexPath.row]
         let steps = recipeSteps[indexPath.row]
         
-        let alertVC = PMAlertController(title: "How to Cook " + dishName + ":", description: steps, image: UIImage(named: dishImage), style: .alert)
-
-
-        alertVC.addAction(PMAlertAction(title: "Close", style: .cancel, action: { () in
-                    print("Capture action Close")
-                }))
-
-
-        self.present(alertVC, animated: true, completion: nil)
+        let alert = UIAlertController(title: "How to Cook " + dishName + ":", message: steps, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)≥
     }
 
 }

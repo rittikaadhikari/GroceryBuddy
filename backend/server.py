@@ -80,7 +80,6 @@ def update_user():
 @app.route('/users/<username>', methods=['GET'])
 def get_user(username):
     res = psql.get_user_data(username)
-    print(res)
     if res:
         return create_response(res, 200, "OK")
     return create_response({}, 404, "Not Found")
@@ -106,7 +105,6 @@ def get_ingredient(username):
 def autocomplete_ingredient():
     data = request.args
     ingredient_name = data.get("ingredient_name")
-    print("JESUS CHRISTO: ", data.get("ingredient_name"))
     if ingredient_name:
         res = psql.autocomplete_ingredients(ingredient_name)
     if res:

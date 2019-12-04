@@ -14,6 +14,7 @@ class IngredientTableViewController: UITableViewController {
     var ingredients = [String]()
     var listItems = [ListItem]()
     var username:String = ""
+    var isFridge:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class IngredientTableViewController: UITableViewController {
         cell.listItems = item
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.username = username
+        cell.isFridge = isFridge
         
         return cell
     }
@@ -59,7 +61,10 @@ class IngredientTableViewController: UITableViewController {
     }
     
     func deleteRequest(ingredientName: String) {
-        let url = "http://3.228.111.41/list?username=" + username + "&ingredient=" + ingredientName
+        var url = "http://3.228.111.41/list?username=" + username + "&ingredient=" + ingredientName
+        if isFridge {
+            url = "http://3.228.111.41/fridge?username=" + username + "&ingredient=" + ingredientName
+        }
         
         AF.request(url, method: .delete, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {

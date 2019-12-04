@@ -13,7 +13,7 @@
 		FA267DB8236B9EC9003B4AB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA267DB6236B9EC9003B4AB9 /* LaunchScreen.storyboard */; };
 		FA267DC0236BA279003B4AB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */; };
 		FA49A83C23946B55001D334E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49A83B23946B55001D334E /* LoginViewController.swift */; };
-		FAEA1AA1236BBD1400A41926 /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA0236BBD1400A41926 /* FridgeViewController.swift */; };
+		FAEA1AA1236BBD1400A41926 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA0236BBD1400A41926 /* UserViewController.swift */; };
 		FAEA1AA5236BC03600A41926 /* IngredientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */; };
 		FAEA1AA9236BD1E900A41926 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = FAEA1AA8236BD1E900A41926 /* Podfile */; };
 		FAF14883238E109D0041703A /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF14882238E109D0041703A /* LaunchViewController.swift */; };
@@ -37,7 +37,7 @@
 		FA267DB9236B9EC9003B4AB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FA49A83B23946B55001D334E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		FAEA1AA0236BBD1400A41926 /* FridgeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FridgeViewController.swift; sourceTree = "<group>"; };
+		FAEA1AA0236BBD1400A41926 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		FAEA1AA4236BC03600A41926 /* IngredientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewController.swift; sourceTree = "<group>"; };
 		FAEA1AA8236BD1E900A41926 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FAF14882238E109D0041703A /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 				FA49A83A23946B1C001D334E /* StartFlow */,
 				FAF14881238E0D640041703A /* IngredientControllers */,
 				FAEA1AA8236BD1E900A41926 /* Podfile */,
-				FAEA1AA0236BBD1400A41926 /* FridgeViewController.swift */,
+				FAEA1AA0236BBD1400A41926 /* UserViewController.swift */,
 				FA267DBF236BA279003B4AB9 /* SceneDelegate.swift */,
 				FA267DAB236B9EC4003B4AB9 /* AppDelegate.swift */,
 				FA267DB4236B9EC9003B4AB9 /* Assets.xcassets */,
@@ -264,7 +264,7 @@
 				FAFE2625236BE36D002A6D2F /* SearchIngredientViewController.swift in Sources */,
 				FAEA1AA5236BC03600A41926 /* IngredientTableViewController.swift in Sources */,
 				FA49A83C23946B55001D334E /* LoginViewController.swift in Sources */,
-				FAEA1AA1236BBD1400A41926 /* FridgeViewController.swift in Sources */,
+				FAEA1AA1236BBD1400A41926 /* UserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

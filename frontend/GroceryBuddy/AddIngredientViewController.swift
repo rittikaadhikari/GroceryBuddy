@@ -13,6 +13,7 @@ import Alamofire
 class AddIngredientViewController: FormViewController {
     
     var username:String = ""
+    var isFridge:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,10 @@ class AddIngredientViewController: FormViewController {
     }
     
     func postRequest(ingredientName: String) {
-        let url = "http://3.228.111.41/list"
+        var url = "http://3.228.111.41/list"
+        if isFridge {
+            url = "http://3.228.111.41/fridge"
+        }
 
         let parameters = [
             "username": username,

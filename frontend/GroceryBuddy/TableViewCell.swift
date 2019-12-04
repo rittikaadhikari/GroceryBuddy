@@ -14,6 +14,7 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
     var oldLabel:String
     let label:UITextField
     var username:String = ""
+    var isFridge:Bool = false
      
     var listItems:ListItem? {
         didSet {
@@ -49,7 +50,10 @@ class TableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func putRequest(oldIngredient: String, newIngredient: String) {
-        let url = "http://3.228.111.41/list"
+        var url = "http://3.228.111.41/list"
+        if isFridge {
+            url = "http://3.228.111.41/fridge"
+        }
 
         let parameters = [
             "username": username,

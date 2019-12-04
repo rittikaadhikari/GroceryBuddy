@@ -30,6 +30,7 @@ class SearchIngredientViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "Browse Recipes"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(onRefresh))
 
         view.addSubview(collectionView)
         collectionView.backgroundColor = .white
@@ -42,6 +43,10 @@ class SearchIngredientViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
 
+    }
+    
+    @objc func onRefresh() {
+        
     }
 }
 
@@ -72,7 +77,7 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
                 v.removeFromSuperview()
             }
         }
-        cell.contentView.addSubview(title)
+        cell.addSubview(title)
         cell.backgroundColor = .lightGray
         cell.layer.cornerRadius = 8
         
@@ -80,7 +85,7 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = 8
         imageView.sd_setImage(with: URL(string: recipeImages[indexPath.row]))
-        cell.contentView.addSubview(imageView)
+        cell.addSubview(imageView)
         
         return cell
     }

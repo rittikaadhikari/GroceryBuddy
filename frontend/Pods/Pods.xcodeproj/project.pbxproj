@@ -1387,7 +1387,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = A99A2B864638A97631E7AD1026F70007 /* Products */;
@@ -1759,6 +1758,22 @@
 			};
 			name = Debug;
 		};
+		16CD7FA4A33EAF12C77C6CB8F41A6008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9482FDBEE63223D5D79E51E0947C6CD /* PMAlertController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PMAlertController";
+				INFOPLIST_FILE = "Target Support Files/PMAlertController/ResourceBundle-PMAlertController-PMAlertController-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = PMAlertController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		2649AFA3C7047C9FD3DB978A724CE7AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 74C1BBBE2EE17E05F37A408C386BE95C /* SDWebImage.xcconfig */;
@@ -1965,23 +1980,6 @@
 			};
 			name = Release;
 		};
-		6EC868A3C22B1FE0A15F4EB24A097098 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9482FDBEE63223D5D79E51E0947C6CD /* PMAlertController.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PMAlertController";
-				IBSC_MODULE = PMAlertController;
-				INFOPLIST_FILE = "Target Support Files/PMAlertController/ResourceBundle-PMAlertController-PMAlertController-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				PRODUCT_NAME = PMAlertController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
 		804E13245C9FBBE6A340C555CA8B2B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2046,6 +2044,22 @@
 			};
 			name = Debug;
 		};
+		8E615A76B36CE8BFF6B3F5B63AFF1B0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9482FDBEE63223D5D79E51E0947C6CD /* PMAlertController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PMAlertController";
+				INFOPLIST_FILE = "Target Support Files/PMAlertController/ResourceBundle-PMAlertController-PMAlertController-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = PMAlertController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		96EC1660C8BA133B3EE2633DFB2E3D68 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57C6AFE96261AA52576694151343AC8E /* Eureka.xcconfig */;
@@ -2080,23 +2094,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		9FCF8B43CE32D78DC8300AE5392E09E5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9482FDBEE63223D5D79E51E0947C6CD /* PMAlertController.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PMAlertController";
-				IBSC_MODULE = PMAlertController;
-				INFOPLIST_FILE = "Target Support Files/PMAlertController/ResourceBundle-PMAlertController-PMAlertController-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				PRODUCT_NAME = PMAlertController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
 		};
 		A03424AA11483B95AB6D29612E623C4F /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2384,8 +2381,8 @@
 		ECAC9C15C29CAFCAB7D31EFD9781882A /* Build configuration list for PBXNativeTarget "PMAlertController-PMAlertController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6EC868A3C22B1FE0A15F4EB24A097098 /* Debug */,
-				9FCF8B43CE32D78DC8300AE5392E09E5 /* Release */,
+				16CD7FA4A33EAF12C77C6CB8F41A6008 /* Debug */,
+				8E615A76B36CE8BFF6B3F5B63AFF1B0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

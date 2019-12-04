@@ -54,7 +54,7 @@ class SearchIngredientViewController: UIViewController {
 
     }
     
-    func getRequestBrowsing(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+    func getRequestBrowsing(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/recipes"
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
@@ -63,22 +63,24 @@ class SearchIngredientViewController: UIViewController {
                 let json = JSON(response.value)
                 var names = [String]()
                 var imageLinks = [String]()
+                var stepsList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
                             names.append(name)
                             imageLinks.append(imageLink)
+                            stepsList.append(steps)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    func getRequestSchedule(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+    func getRequestSchedule(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/refreshschedule"
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
@@ -87,15 +89,17 @@ class SearchIngredientViewController: UIViewController {
                 let json = JSON(response.value)
                 var names = [String]()
                 var imageLinks = [String]()
+                var stepsList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
                             names.append(name)
                             imageLinks.append(imageLink)
+                            stepsList.append(steps)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
             case .failure(let error):
                 print(error)
             }
@@ -107,12 +111,14 @@ class SearchIngredientViewController: UIViewController {
             getRequestBrowsing { (result) in
                 self.recipeNames = result.names!
                 self.recipeImages = result.imageLinks!
+                self.recipeSteps = result.stepsList!
                 self.collectionView.reloadData()
             }
         } else {
             getRequestSchedule(week: week) { (result) in
                 self.recipeNames = result.names!
                 self.recipeImages = result.imageLinks!
+                self.recipeSteps = result.stepsList!
                 self.collectionView.reloadData()
             }
         }
@@ -168,8 +174,9 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
 //        self.present(alert, animated: true, completion: nil)
         let dishName = recipeNames[indexPath.row]
         let dishImage = recipeImages[indexPath.row]
+        let steps = recipeSteps[indexPath.row]
         
-        let alertVC = PMAlertController(title: "How to Cook " + dishName + ":", description: "1. Do this and that and this! 2. Do that and this and that", image: UIImage(named: dishImage), style: .alert)
+        let alertVC = PMAlertController(title: "How to Cook " + dishName + ":", description: steps, image: UIImage(named: dishImage), style: .alert)
 
 
         alertVC.addAction(PMAlertAction(title: "Close", style: .cancel, action: { () in

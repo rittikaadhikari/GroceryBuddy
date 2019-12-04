@@ -81,7 +81,7 @@ class SetupScheduleViewController: FormViewController {
         }
     }
     
-    func getRequest(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+    func getRequest(week: Int, completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/mealschedules?username=" + username + "&week=" + String(week)
         print(url)
         
@@ -91,15 +91,17 @@ class SetupScheduleViewController: FormViewController {
                 let json = JSON(response.value)
                 var names = [String]()
                 var imageLinks = [String]()
+                var stepsList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
                             names.append(name)
                             imageLinks.append(imageLink)
+                            stepsList.append(steps)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
             case .failure(let error):
                 print(error)
             }
@@ -121,6 +123,7 @@ class SetupScheduleViewController: FormViewController {
                     self.getRequest(week: week) { (result) in
                         searchController.recipeNames = result.names!
                         searchController.recipeImages = result.imageLinks!
+                        searchController.recipeSteps = result.stepsList!
                         searchController.justBrowsing = false
                         searchController.week = week
                         searchController.username = self.username

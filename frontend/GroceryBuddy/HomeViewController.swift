@@ -15,7 +15,7 @@ class HomeViewController: UITabBarController {
     var username:String = ""
     var viewsSet:Bool = false
     
-    func getRequest(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+    func getRequest(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?, stepsList: [String]?)) -> ()) {
         let url = "http://3.228.111.41/recipes"
         
         AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
@@ -24,15 +24,17 @@ class HomeViewController: UITabBarController {
                 let json = JSON(response.value)
                 var names = [String]()
                 var imageLinks = [String]()
+                var stepsList = [String]()
                 if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
                     for item in recipes_main {
-                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string, let steps = item["recipe"]["instructions"].string {
                             names.append(name)
                             imageLinks.append(imageLink)
+                            stepsList.append(steps)
                         }
                     }
                 }
-                completionHandler((names as? [String], imageLinks as? [String]))
+                completionHandler((names as? [String], imageLinks as? [String], stepsList as? [String]))
             case .failure(let error):
                 print(error)
             }
@@ -54,6 +56,7 @@ class HomeViewController: UITabBarController {
         getRequest { (result) in
             searchController.recipeNames = result.names!
             searchController.recipeImages = result.imageLinks!
+            searchController.recipeSteps = result.stepsList!
             searchController.justBrowsing = true
         }
         navigationController3.pushViewController(searchController, animated: false)

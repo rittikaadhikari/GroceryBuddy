@@ -25,6 +25,9 @@ class IngredientTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         self.navigationItem.title = "Grocery List"
+        if isFridge {
+            self.navigationItem.title = "Fridge"
+        }
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         for ingredient in ingredients {

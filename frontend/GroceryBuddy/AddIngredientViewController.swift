@@ -25,11 +25,22 @@ class AddIngredientViewController: FormViewController {
             <<< TextRow("IngredientTag"){ row in
                 row.title = "Ingredient Name"
                 row.placeholder = "Enter text here"
+                row.add(rule: RuleRequired())
+                row.validationOptions = .validatesOnChangeAfterBlurred
             }
             <<< ActionSheetRow<String>("IngredientCat"){ row in
-                    row.title = "Select a Category"
-                    row.selectorTitle = "Select a Category"
-                    row.options = ["Meat", "Vegetables", "Fruit", "Dairy", "Cheese", "Seafood"]
+                row.title = "Select a Category"
+                row.selectorTitle = "Select a Category"
+                row.options = ["Meat", "Vegetables", "Fruit", "Dairy", "Seafood", "Other"]
+                row.add(rule: RuleRequired())
+                row.validationOptions = .validatesOnChangeAfterBlurred
+            }
+            <<< ActionSheetRow<String>("ListCat"){ row in
+                row.title = "Add to Where?"
+                row.selectorTitle = "Add to Where?"
+                row.options = ["Grocery List", "Fridge"]
+                row.add(rule: RuleRequired())
+                row.validationOptions = .validatesOnChangeAfterBlurred
             }
             +++ Section("Metadata")
             <<< DateRow(){
@@ -60,11 +71,24 @@ class AddIngredientViewController: FormViewController {
     }
     
     @objc func onDone() {
-        let valuesDictionary = form.values()
-        let ingredientName = valuesDictionary["IngredientTag"]
-        if let ingredientName = ingredientName as! String? {
-            print(ingredientName)
-            postRequest(ingredientName: ingredientName)
+        let validationErrors = form.validate()
+        if validationErrors.isEmpty {
+            let valuesDictionary = form.values()
+            let ingredientName = valuesDictionary["IngredientTag"]
+            let location = valuesDictionary["ListCat"]
+            if let ingredientName = ingredientName as! String?,
+                let location = location as! String? {
+                if location == "Fridge" {
+                    isFridge = true
+                } else {
+                    isFridge = false
+                }
+                postRequest(ingredientName: ingredientName)
+            }
+        } else {
+            let alert = UIAlertController(title: "Missing ingredient information", message: "Please enter ingredient information", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

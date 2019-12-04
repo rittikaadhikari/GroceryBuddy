@@ -76,6 +76,7 @@ class UserViewController: UIViewController {
                 print(json)
                 guard let result = json["result"] as? [String: Any], let userIngredients = result["user_ingredients"] as? [String] else {
                   print("Could not get user ingredients from JSON")
+                  completionHandler([] as? [String])
                   return
                 }
                 print(userIngredients)

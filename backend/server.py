@@ -102,6 +102,13 @@ def get_ingredient(username):
         return create_response(res, 200, "OK")
     return create_response({}, 404, "Not Found")
 
+@app.route('/allingredients', methods=['GET'])
+def get_ingredients():
+    res = psql.get_ingredients()
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
 @app.route('/ingredients', methods=['POST'])
 def add_ingredient():
     data = request.form
@@ -200,6 +207,36 @@ def change_ingredient_on_list():
     return create_response({}, 404, "Not Found")
 
 ######################################################################################################
+@app.route('/recipes', methods=['GET'])
+def get_recipes():
+    res = psql.get_recipes()
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+######################################################################################################
+@app.route('/schedule', methods=['POST'])
+def add_schedule():
+    data = request.form
+    username = data.get("username")
+    week = data.get("week")
+    time_available = data.get("time_available")
+    num_meals = data.get("num_meals")
+    res = psql.add_schedule(username, week, time_available, num_meals)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response({}, 404, "Not Found")
+
+@app.route('/schedule', methods=['GET'])
+def get_meal_schedule():
+    data = request.form
+    username = data.get("username")
+    week = data.get("week")
+    res = psql.get_meal_schedule(username, week)
+    if res:
+        return create_response(res, 200, "OK")
+    return create_response(res, 404, "Not Found")
+
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0', port=80)

@@ -17,8 +17,10 @@ class SearchIngredientViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        layout.minimumInteritemSpacing = 50
+        layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
+        layout.sectionInset = UIEdgeInsets(top:10, left: 32, bottom: 10, right: 32)
+        
         return cv
     }()
     
@@ -31,8 +33,8 @@ class SearchIngredientViewController: UIViewController {
         collectionView.backgroundColor = .white
         self.view.backgroundColor = .white
         collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive=true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive=true
-        collectionView.trailingAnchor.constraint(equalTo:view.trailingAnchor,constant: -5).isActive=true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive=true
+        collectionView.trailingAnchor.constraint(equalTo:view.trailingAnchor,constant: 0).isActive=true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive=true
         
         collectionView.delegate = self
@@ -44,7 +46,7 @@ class SearchIngredientViewController: UIViewController {
 extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2.5, height: collectionView.frame.width/2)
+        return CGSize(width: collectionView.frame.width/2.75, height: collectionView.frame.width/2.75)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -54,8 +56,14 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) //as! CustomCell
-        //cell.data = self.data[indexPath.item]
+        let title = UILabel(frame: CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: 40))
+        title.textColor = UIColor.black
+        title.text = "T"
+        title.textAlignment = .center
+        cell.contentView.addSubview(title)
         cell.backgroundColor = .red
+        cell.layer.cornerRadius = 8
+        
         return cell
     }
     

@@ -39,7 +39,6 @@ def get_user_data(username):
     return get_dict_resultset(query, params)
 
 def update_user(ouser, fname, lname, username, password):
-    print(username)
     if username:
         query = """UPDATE users set first_name = %s, last_name =  %s, username = %s, password = %s where username = %s returning *"""
         params = (fname, lname, username, password, ouser)
@@ -155,7 +154,6 @@ def insert_into_fridge(username, ingredient):
     res = fridge.update({"user_id":user_id}, {"$push": {"fridge": ingredient_id}}, upsert=True)
     if res.get('upserted'):
         res.pop('upserted')
-    print(res)
     return res
 
 def delete_from_fridge(username, ingredient):
@@ -230,7 +228,7 @@ def add_schedule(username, week, time_available, num_meals):
     user_id = ans.get("user_id")
 
     query = """INSERT INTO possible_schedules(user_id, week, time_available, num_recipes) values (%s, %s, %s, %s) returning *"""
-    params = (user_id, week, time_available, num_recipes)
+    params = (user_id, week, time_available, num_meals)
 
     return get_dict_resultset(query, params)
 
@@ -247,7 +245,6 @@ def get_meal_schedule(username, week):
 
     ## get user's fridge
     user_fridge = fridge.find_one({"user_id":user_id}, {"fridge": 1, "_id": 0})['fridge']
-    print(user_fridge)
 
     ## get all recipe candidates (recipes that use ingredients only available from the fridge)
     user_recipes = recipes.find({"$expr": {"$setIsSubset": ["$ingredient_ids", user_fridge]}})
@@ -283,6 +280,5 @@ def get_meal_schedule(username, week):
 
     potential_combos = sorted(potential_combos, key=lambda x: (-x[2], x[1]))
     combo_meals = [[user_recipes_list[i] for i in list(combo[0])] for combo in potential_combos]
-    res = {"results": combo_meals}
-    return res
+    return {"result":json.loads(dumps(combo_meals))}
 

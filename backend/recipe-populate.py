@@ -9,16 +9,16 @@ from pymongo import MongoClient
 
 client = MongoClient('3.234.30.163', 27017)
 db = client.grocery_list
-recipes = db.recipes3
+recipes = db.recipes4
 conn = psycopg2.connect(dbname='postgres', user='postgres', password='alawini411', host='cs411-project.cm2xo0osnz3p.us-east-1.rds.amazonaws.com', port='5432')
 conn.autocommit = True
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 cur.execute("select ingredient_id, ingredient_name from ingredients2")
-all_ingredients = cur.fetchall() 
+all_ingredients = cur.fetchall()
 for ing in all_ingredients:
     ing[1] = ing[1].lower()
 
-with open('./recipes.json') as json_file:
+with open('./recipes2.json') as json_file:
     data = json.load(json_file)
     for recipe in data['data']:
         try:
@@ -54,5 +54,5 @@ with open('./recipes.json') as json_file:
                 ids.append(choice_id[choices.index(max(choices, key=len))])
             print (recipe['title'], ids)
             recipes.insert_one({"time": recipe['total_time'], "ingredient_ids": ids, "recipe": recipe})
-        except Exception as e: 
-           print(e) 
+        except Exception as e:
+           print(e)

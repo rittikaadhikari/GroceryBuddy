@@ -126,7 +126,7 @@ class SetupScheduleViewController: FormViewController {
                 let ingredientsTable = SearchIngredientViewController()
                 ingredientsTable.username = username
                 getRequest(week: week, completionHandler: { (result) in
-                    ingredientsTable.ingredients = result!
+                    //ingredientsTable.ingredients = result!
                     self.navigationController?.pushViewController(ingredientsTable, animated: true)
                 })
             }

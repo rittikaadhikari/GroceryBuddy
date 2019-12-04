@@ -45,11 +45,22 @@ class UserViewController: UIViewController {
     
     lazy var scheduleButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 100, y: 310, width: 220, height: 50))
-        button.setTitle("View Potential Schedules", for: .normal)
+        button.setTitle("Generate Schedules", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(scheduleButtonAction), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    lazy var scheduleJoinButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 100, y: 380, width: 220, height: 50))
+        button.setTitle("View Number of Meals", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(scheduleJoinButtonAction), for: .touchUpInside)
         
         return button
     }()
@@ -62,6 +73,7 @@ class UserViewController: UIViewController {
         self.view.addSubview(itemsButton)
         self.view.addSubview(fridgeButton)
         self.view.addSubview(scheduleButton)
+        self.view.addSubview(scheduleJoinButton)
         
         let groceryImage = UIImageView(frame: CGRect(x: 180, y: 500, width: 50, height: 200))
         groceryImage.image = UIImage(named: "GroceryBag")
@@ -182,9 +194,26 @@ class UserViewController: UIViewController {
                                    completion: { Void in()  }
         )
         
-        //let scheduleView = SetupScheduleViewController()
+        let scheduleView = SetupScheduleViewController()
+        scheduleView.username = username
+        self.navigationController?.pushViewController(scheduleView, animated: true)
+    }
+    
+    @objc func scheduleJoinButtonAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+        UIView.animate(withDuration: 2.0,
+                                   delay: 0,
+                                   usingSpringWithDamping: CGFloat(0.20),
+                                   initialSpringVelocity: CGFloat(6.0),
+                                   options: UIView.AnimationOptions.allowUserInteraction,
+                                   animations: {
+                                    sender.transform = CGAffineTransform.identity
+            },
+                                   completion: { Void in()  }
+        )
+        
         let scheduleView = ScheduleChartController()
-        //scheduleView.username = username
         self.navigationController?.pushViewController(scheduleView, animated: true)
     }
 }

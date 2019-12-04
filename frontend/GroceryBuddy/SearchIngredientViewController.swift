@@ -11,7 +11,8 @@ import SDWebImage
 
 class SearchIngredientViewController: UIViewController {
     
-    var username:String = ""
+    var recipeNames = [String]()
+    var recipeImages = [String]()
     
     fileprivate let collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -51,15 +52,14 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
-        //return data.count
+        return recipeNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let title = UILabel(frame: CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: 40))
         title.textColor = UIColor.black
-        title.text = "T"
+        title.text = recipeNames[indexPath.row]
         title.textAlignment = .center
         cell.contentView.addSubview(title)
         cell.backgroundColor = .lightGray
@@ -68,7 +68,7 @@ extension SearchIngredientViewController: UICollectionViewDelegateFlowLayout, UI
         let imageView = UIImageView(frame: CGRect(x: 0, y: 50, width: cell.bounds.size.width, height: 100))
         imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = 8
-        imageView.sd_setImage(with: URL(string: "https://upload.wikimedia.org/wikipedia/commons/f/f1/2ChocolateChipCookies.jpg"))
+        imageView.sd_setImage(with: URL(string: recipeImages[indexPath.row]))
         cell.contentView.addSubview(imageView)
         
         

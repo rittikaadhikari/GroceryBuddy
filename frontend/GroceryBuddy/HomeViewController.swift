@@ -7,11 +7,37 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class HomeViewController: UITabBarController {
 
     var username:String = ""
     var viewsSet:Bool = false
+    
+    func getRequest(completionHandler: @escaping ((names: [String]?, imageLinks: [String]?)) -> ()) {
+        let url = "http://3.228.111.41/recipes"
+        
+        AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                let json = JSON(response.value)
+                var names = [String]()
+                var imageLinks = [String]()
+                if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
+                    for item in recipes_main {
+                        if let name = item["recipe"]["title"].string, let imageLink = item["recipe"]["image"].string {
+                            names.append(name)
+                            imageLinks.append(imageLink)
+                        }
+                    }
+                }
+                completionHandler((names as? [String], imageLinks as? [String]))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     
     func createViews() {
         let userController = UserViewController()
@@ -25,7 +51,12 @@ class HomeViewController: UITabBarController {
 
         let navigationController3 = UINavigationController()
         let searchController = SearchIngredientViewController()
-        searchController.username = username
+        getRequest { (result) in
+            searchController.recipeNames = result.names!
+            searchController.recipeImages = result.imageLinks!
+            print(result.names!)
+            print(result.imageLinks!)
+        }
         navigationController3.pushViewController(searchController, animated: false)
 
         self.viewControllers = [userController, navigationController2, navigationController3]

@@ -124,11 +124,10 @@ class SetupScheduleViewController: FormViewController {
                 postRequest(week: week, time_avail: time_avail, num_meals: num_meals)
                 
                 let ingredientsTable = SearchIngredientViewController()
-                ingredientsTable.username = username
-                getRequest(week: week, completionHandler: { (result) in
-                    ingredientsTable.ingredients = result!
-                    self.navigationController?.pushViewController(ingredientsTable, animated: true)
-                })
+//                getRequest(week: week, completionHandler: { (result) in
+//                    ingredientsTable.recipes = result!
+//                    self.navigationController?.pushViewController(ingredientsTable, animated: true)
+//                })
             }
         } else {
             let alert = UIAlertController(title: "Missing items", message: "Please enter preference information", preferredStyle: .alert)

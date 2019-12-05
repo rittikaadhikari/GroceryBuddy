@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class UserViewController: UIViewController {
     
@@ -45,11 +46,22 @@ class UserViewController: UIViewController {
     
     lazy var scheduleButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 100, y: 310, width: 220, height: 50))
-        button.setTitle("View Potential Schedules", for: .normal)
+        button.setTitle("Generate Schedules", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(scheduleButtonAction), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    lazy var scheduleJoinButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 100, y: 380, width: 220, height: 50))
+        button.setTitle("View Number of Meals", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        button.backgroundColor = UIColor(red: 3.0/255.0, green: 155.0/255.0, blue: 229.0/255.0, alpha: 1.0)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(scheduleJoinButtonAction), for: .touchUpInside)
         
         return button
     }()
@@ -62,6 +74,7 @@ class UserViewController: UIViewController {
         self.view.addSubview(itemsButton)
         self.view.addSubview(fridgeButton)
         self.view.addSubview(scheduleButton)
+        self.view.addSubview(scheduleJoinButton)
         
         let groceryImage = UIImageView(frame: CGRect(x: 180, y: 500, width: 50, height: 200))
         groceryImage.image = UIImage(named: "GroceryBag")
@@ -116,6 +129,28 @@ class UserViewController: UIViewController {
                 }
                 print(userIngredients)
                 completionHandler(userIngredients as? [String])
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getRequestJoinSchedule(completionHandler: @escaping ([Int]?) -> ()) {
+        let url = "http://3.228.111.41/schedule?username=" + username
+        
+        AF.request(url, method: .get, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                let json = JSON(response.value)
+                var num_recipes = [Int]()
+                if let result = json["result"].dictionary, let recipes_main = result["result"]?.array {
+                    for item in recipes_main {
+                        if let recipe = item["num_recipes"].int {
+                            num_recipes.append(recipe)
+                        }
+                    }
+                }
+                completionHandler(num_recipes as? [Int])
             case .failure(let error):
                 print(error)
             }
@@ -185,5 +220,26 @@ class UserViewController: UIViewController {
         let scheduleView = SetupScheduleViewController()
         scheduleView.username = username
         self.navigationController?.pushViewController(scheduleView, animated: true)
+    }
+    
+    @objc func scheduleJoinButtonAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+        UIView.animate(withDuration: 2.0,
+                                   delay: 0,
+                                   usingSpringWithDamping: CGFloat(0.20),
+                                   initialSpringVelocity: CGFloat(6.0),
+                                   options: UIView.AnimationOptions.allowUserInteraction,
+                                   animations: {
+                                    sender.transform = CGAffineTransform.identity
+            },
+                                   completion: { Void in()  }
+        )
+        
+        getRequestJoinSchedule { (result) in
+            let scheduleView = ScheduleChartController()
+            scheduleView.num_recipes = result!
+            self.navigationController?.pushViewController(scheduleView, animated: true)
+        }
     }
 }

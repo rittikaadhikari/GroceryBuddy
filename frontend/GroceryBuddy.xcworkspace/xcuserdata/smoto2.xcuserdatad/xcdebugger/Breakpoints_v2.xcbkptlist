@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "51BC2214-59B5-4E06-9D76-E18B03479B47"
-            shouldBeEnabled = "No"
+            uuid = "65C9FCB4-6E10-4E25-8F5B-D6A2F801D478"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GroceryBuddy/IngredientTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "deleteRequest(ingredientName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -23,16 +23,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "899E9E8B-299B-4E0E-85FC-8420172A0631"
+            uuid = "D2E24E19-8681-4E05-83C3-7FE180FCE6A1"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GroceryBuddy/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "fridgeButtonAction(sender:)"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "scheduleJoinButtonAction(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6795DB6A-E972-4DE7-BA99-517D659C74A6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GroceryBuddy/UserViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "getRequestJoinSchedule(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

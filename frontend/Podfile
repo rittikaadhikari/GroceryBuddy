@@ -11,5 +11,5 @@ target 'GroceryBuddy' do
   pod 'SDWebImage', '~> 5.0'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'PMAlertController'
-
+  pod 'Charts'
 end

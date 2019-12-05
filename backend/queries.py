@@ -64,7 +64,11 @@ def insert_into_grocery_list(username, ingredient):
         return None
     ans = dict(ans)
     user_id = ans.get("user_id")
-    res = grocery_list.update({"user_id":user_id}, {"$push": {"user_ingredients": ingredient}}, upsert=True)
+    ingredient_name = get_ingredient(ingredient)
+    if not ingredient_name:
+        return None
+    ingredient_name = ingredient_name['result'][0]['ingredient_name']
+    res = grocery_list.update({"user_id":user_id}, {"$push": {"user_ingredients": ingredient_name}}, upsert=True)
     if res.get('upserted'):
         res.pop('upserted')
     return res
@@ -100,15 +104,22 @@ def edit_ingredient_in_grocery_list(username, old_ingredient, new_ingredient):
 
 
 def create_ingredient(ingredient_name, ingredient_category):
-    query = """INSERT INTO ingredients2(ingredient_name, ingredient_category) values (%s, %s) returning *"""
-    params = (ingredient_name, ingredient_category)
-    return get_dict_resultset(query, params)
-
+    ans = get_ingredient(ingredient_name)
+    if not ans:
+        query = """INSERT INTO ingredients2(ingredient_name, ingredient_category) values (%s, %s) returning *"""
+        params = (ingredient_name, ingredient_category)
+        return get_dict_resultset(query, params)
+    return ans
 
 def get_ingredient(ingredient_name):
     query = """select * from ingredients2 where ingredient_name ilike %s limit 1"""
-    params = ('%' + ingredient_name + '%',)
-    return get_dict_resultset(query, params)
+    params = (ingredient_name, )
+    ans = get_dict_resultset(query, params)
+    if not ans:
+        query = """select * from ingredients2 where ingredient_name ilike %s limit 1"""
+        params = ('%' + ingredient_name + '%',)
+        return get_dict_resultset(query, params)
+    return ans
 
 def get_ingredient_by_category(ingredient_category):
     query = """SELECT * FROM ingredients2 where ingredient_category = %s"""
@@ -140,20 +151,10 @@ def insert_into_fridge(username, ingredient):
     ans = dict(ans)
     user_id = ans.get("user_id")
 
-    query = """select ingredient_id from ingredients2 where ingredient_name ilike %s"""
-    params = (ingredient, )
-    cur.execute(query, params)
-    ans = cur.fetchone()
-    if not ans:
-        query = """insert into ingredients2(ingredient_name, ingredient_category) values (%s, 'unknown') returning ingredient_id"""
-        params = (ingredient, )
-        cur.execute(query, params)
-        ans = cur.fetchone()
-        ans = dict(ans)
-        ingredient_id = ans.get("ingredient_id")
-    else:
-        ans = dict(ans)
-        ingredient_id = ans.get("ingredient_id")
+    ingredient_name = get_ingredient(ingredient)
+    if not ingredient_name:
+        return None
+    ingredient_id = ingredient_name['result'][0]['ingredient_id']
     res = fridge.update({"user_id":user_id}, {"$push": {"fridge": ingredient_id}}, upsert=True)
     if res.get('upserted'):
         res.pop('upserted')
@@ -290,7 +291,6 @@ def get_meal_schedule(username, week):
     recipe_indices = [i for i in range(user_recipes.count())]
     recipe_combinations = list(itertools.combinations(recipe_indices, num_recipes))
     user_recipes_list = list(user_recipes)
-
     potential_combos = list()
     for combo in recipe_combinations:
         total_time = 0
@@ -307,7 +307,10 @@ def get_meal_schedule(username, week):
     global combo_meals, num_refreshes
     num_refreshes = 0
     combo_meals = [[user_recipes_list[i] for i in list(combo[0])] for combo in potential_combos]
-    return {"result":json.loads(dumps(combo_meals[0]))}
+    if len(combo_meals) == 0:
+        return {"result": "no more recipes :("}
+    else:
+        return {"result":json.loads(dumps(combo_meals[0]))}
 
 def refresh_schedule():
     global combo_meals, num_refreshes
@@ -318,8 +321,3 @@ def refresh_schedule():
         return {"result": "no more recipes :("}
     return {"result": json.loads(dumps(combo_meals[num_refreshes]))}
 
-#print(get_meal_schedule('joker', 2))
-#print(refresh_schedule())
-#print(refresh_schedule())
-#print(refresh_schedule())
-#print(get_ingredient('garlic'))

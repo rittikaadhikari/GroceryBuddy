@@ -193,7 +193,9 @@ def remove_ingredient_from_list():
 
     res = psql.delete_from_grocery_list(username, ingredient)
     if res:
-        return create_response(res, 200, "OK")
+        res = psql.insert_into_fridge(username, ingredient)
+        if res:
+            return create_response(res, 200, "OK")
     return create_response({}, 404, "Not Found")
 
 @app.route('/list/<username>', methods=['GET'])
